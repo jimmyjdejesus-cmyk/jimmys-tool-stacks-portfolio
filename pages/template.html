@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <!-- ========================================
+         Essential Meta Tags
+         ======================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Page description goes here - optimize for search engines">
+    <meta name="author" content="Jimmy">
+    <meta name="keywords" content="portfolio, web development, technology, software engineering">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Page Title">
+    <meta property="og:description" content="Page description for social sharing">
+    <meta property="og:url" content="https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/">
+    <meta property="og:site_name" content="Jimmy's Portfolio">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Page Title">
+    <meta name="twitter:description" content="Page description for social sharing">
+    
+    <!-- Title -->
+    <title>Page Title | Jimmy's Portfolio</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="../../css/main.css">
+    
+    <!-- Page-Specific Styles (if needed) -->
+    <!-- <link rel="stylesheet" href="page-name/css/page-name.css"> -->
+    
+    <!-- JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Page Title",
+      "description": "Page description",
+      "url": "https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/pages/",
+      "author": {
+        "@type": "Person",
+        "name": "Jimmy"
+      }
+    }
+    </script>
+</head>
+<body>
+    <!-- ========================================
+         Accessibility: Skip Navigation
+         ======================================== -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <!-- ========================================
+             Header Section
+             ======================================== -->
+        <header role="banner">
+            <h1>Page Title</h1>
+            <p class="subtitle">Page subtitle or tagline</p>
+        </header>
+        
+        <!-- ========================================
+             Main Navigation
+             ======================================== -->
+        <nav role="navigation" aria-label="Main navigation">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../tools/index.html">Tools</a></li>
+                <li><a href="../blog/index.html">Blog</a></li>
+                <li><a href="about/html/about.html">About</a></li>
+            </ul>
+        </nav>
+        
+        <!-- ========================================
+             Main Content Area
+             ======================================== -->
+        <main id="main-content" role="main">
+            <!-- Introduction Section -->
+            <section aria-labelledby="intro-heading">
+                <h2 id="intro-heading">Section Heading</h2>
+                <p>Replace this with your page content. This template demonstrates modern HTML structure optimized for software engineers.</p>
+                <p>Each page follows semantic HTML5 with proper accessibility, SEO optimization, and organized CSS/JS.</p>
+            </section>
+            
+            <!-- Content Cards Section -->
+            <section aria-labelledby="content-heading">
+                <h2 id="content-heading">Content Section</h2>
+                <div class="grid grid-3">
+                    <article class="card">
+                        <h3>Card Title 1</h3>
+                        <p>Add your content here. Replace with relevant information for your page.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Card Title 2</h3>
+                        <p>Add your content here. Replace with relevant information for your page.</p>
+                    </article>
+                    <article class="card">
+                        <h3>Card Title 3</h3>
+                        <p>Add your content here. Replace with relevant information for your page.</p>
+                    </article>
+                </div>
+            </section>
+            
+            <!-- List Section Example -->
+            <section aria-labelledby="list-heading">
+                <h2 id="list-heading">Additional Content</h2>
+                <p>Replace this with your content:</p>
+                <ul>
+                    <li>List item 1 - add your content</li>
+                    <li>List item 2 - add your content</li>
+                    <li>List item 3 - add your content</li>
+                    <li>List item 4 - add your content</li>
+                </ul>
+            </section>
+            
+            <!-- Action Buttons Section -->
+            <section aria-labelledby="actions-heading">
+                <h2 id="actions-heading">Get Started</h2>
+                <div class="text-center">
+                    <a href="#" class="btn" role="button">Primary Action</a>
+                    <a href="#" class="btn btn-secondary" role="button">Secondary Action</a>
+                </div>
+            </section>
+            
+            <!-- Example Form Section (Optional) -->
+            <section aria-labelledby="form-heading">
+                <h2 id="form-heading">Contact Form Example</h2>
+                <form id="example-form" novalidate>
+                    <div class="form-group">
+                        <label for="name">
+                            Name<span aria-label="required" class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            required 
+                            aria-required="true"
+                            autocomplete="name"
+                            placeholder="Your full name"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">
+                            Email<span aria-label="required" class="required">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required 
+                            aria-required="true"
+                            autocomplete="email"
+                            placeholder="your.email@example.com"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">
+                            Message<span aria-label="required" class="required">*</span>
+                        </label>
+                        <textarea 
+                            id="message" 
+                            name="message" 
+                            rows="5" 
+                            required 
+                            aria-required="true"
+                            placeholder="Your message here..."
+                        ></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">
+                        Send Message
+                    </button>
+                </form>
+            </section>
+        </main>
+        
+        <!-- ========================================
+             Footer Section
+             ======================================== -->
+        <footer role="contentinfo">
+            <p>&copy; <time datetime="2024">2024</time> Jimmy's Portfolio. Built with modern web standards.</p>
+            <nav aria-label="Footer navigation">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../portfolio/index.html">Portfolio</a></li>
+                    <li><a href="about/html/about.html">About</a></li>
+                    <li><a href="https://github.com/jimmyjdejesus-cmyk" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                </ul>
+            </nav>
+        </footer>
+    </div>
+    
+    <!-- ========================================
+         JavaScript Files
+         ======================================== -->
+    
+    <!-- Global JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <!-- Page-Specific JavaScript (if needed) -->
+    <!-- <script src="page-name/js/page-name.js"></script> -->
+    
+    <!-- Example: Enhanced Form Handling -->
+    <script>
+        // Modern form validation and submission
+        (function() {
+            'use strict';
+            
+            const form = document.getElementById('example-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Validate form
+                    if (form.checkValidity()) {
+                        console.log('Form is valid - ready to submit');
+                        
+                        // Example: Show success message
+                        const successMsg = document.createElement('div');
+                        successMsg.className = 'success-message';
+                        successMsg.textContent = 'Form submitted successfully!';
+                        successMsg.setAttribute('role', 'alert');
+                        form.appendChild(successMsg);
+                        
+                        // Reset form after 2 seconds
+                        setTimeout(() => {
+                            form.reset();
+                            successMsg.remove();
+                        }, 2000);
+                    } else {
+                        // Show validation errors
+                        form.reportValidity();
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

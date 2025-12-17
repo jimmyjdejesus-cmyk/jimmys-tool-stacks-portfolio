@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Example page demonstrating the nested directory structure">
+    <meta name="author" content="Jimmy">
+    
+    <!-- Title -->
+    <title>Example Page - Jimmy's Portfolio</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../../favicon.ico">
+    
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="../../css/main.css">
+    
+    <!-- Page-Specific Styles -->
+    <link rel="stylesheet" href="../css/example-page.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Back Link -->
+        <a href="../../../index.html" class="back-link">← Back to Home</a>
+        
+        <!-- Header -->
+        <header>
+            <h1>Example Page</h1>
+            <p class="subtitle">Demonstrating nested directory structure for pages</p>
+        </header>
+        
+        <!-- Navigation -->
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="../../../index.html">Home</a></li>
+                <li><a href="../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../template.html">Template</a></li>
+                <li><a href="../../about/html/about.html">About</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Main Content -->
+        <main id="main-content">
+            <section>
+                <h2>📁 Directory Structure</h2>
+                <p>This page demonstrates the recommended directory structure for organizing HTML, CSS, and JavaScript files.</p>
+                
+                <div class="code-example">
+                    <pre><code>pages/
+├── css/                    # Global styles
+│   └── main.css
+├── js/                     # Global scripts
+│   └── main.js
+├── template.html          # Root template file
+│
+└── example-page/          # Page-specific directory
+    ├── html/              # Page HTML files
+    │   └── example-page.html
+    ├── css/               # Page-specific styles
+    │   └── example-page.css
+    └── js/                # Page-specific scripts
+        └── example-page.js</code></pre>
+                </div>
+            </section>
+            
+            <section>
+                <h2>✨ Benefits of This Structure</h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h3>Organized</h3>
+                        <p>Clear separation of concerns with dedicated folders for HTML, CSS, and JS.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Scalable</h3>
+                        <p>Easy to add new pages without cluttering the root directory.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Maintainable</h3>
+                        <p>Each page has its own space for specific styles and scripts.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Modular</h3>
+                        <p>Global styles and scripts shared, page-specific code isolated.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section>
+                <h2>🎯 Best Practices</h2>
+                <ul>
+                    <li>Keep global styles in <code>css/main.css</code></li>
+                    <li>Add page-specific styles in subdirectory CSS files</li>
+                    <li>Use semantic HTML5 elements</li>
+                    <li>Include proper meta tags and accessibility features</li>
+                    <li>Minimize inline styles and scripts</li>
+                    <li>Load global JS first, then page-specific JS</li>
+                </ul>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 Jimmy's Portfolio. Built with ❤️ for foundational skills and continuous learning.</p>
+        </footer>
+    </div>
+    
+    <!-- Global JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <!-- Page-Specific JavaScript -->
+    <script src="../js/example-page.js"></script>
+</body>
+</html>
