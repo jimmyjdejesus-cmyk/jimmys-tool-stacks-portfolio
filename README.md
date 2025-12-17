@@ -34,17 +34,24 @@ This portfolio is designed to:
 2. Navigate to `portfolio/index.html` to see the complete repository index
 3. Explore individual directories for specific content
 
-### Hosting with GitHub Pages
+### Hosting Options
 
-This portfolio is ready for GitHub Pages hosting:
+**🏆 Recommended: GitHub Pages** (Already configured!)
 
-1. Go to repository Settings → Pages
-2. Select source: Deploy from a branch
-3. Choose branch: `main` (or your preferred branch)
-4. Set folder: `/ (root)`
-5. Save and wait for deployment
+This portfolio comes with automatic GitHub Pages deployment via GitHub Actions:
+
+1. Go to repository **Settings** → **Pages**
+2. Under "Build and deployment":
+   - Source: **GitHub Actions** (uses the workflow in `.github/workflows/deploy.yml`)
+3. Save and wait 1-2 minutes for deployment
 
 Your portfolio will be available at: `https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/`
+
+**📖 See [HOSTING.md](HOSTING.md) for:**
+- Complete comparison of free hosting platforms (GitHub Pages, Netlify, Vercel, Cloudflare Pages, etc.)
+- Custom domain setup
+- RAG integration recommendations
+- Zero-management deployment options
 
 ## 📚 Directory Guides
 
