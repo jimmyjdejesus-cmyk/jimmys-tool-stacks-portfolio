@@ -61,11 +61,11 @@
         skillCards.forEach(card => {
             // Add hover effect
             card.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.03)';
+                this.classList.add('skill-card--hover');
             });
             
             card.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
+                this.classList.remove('skill-card--hover');
             });
             
             // Add click to expand functionality (optional)
