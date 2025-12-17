@@ -50,10 +50,15 @@ function highlightActiveNav() {
     const navLinks = $$('nav a');
     
     navLinks.forEach(link => {
-        const linkPath = new URL(link.href).pathname;
-        if (currentPath === linkPath || currentPath.startsWith(linkPath.replace(/\/$/, ''))) {
-            link.classList.add('active');
-            link.setAttribute('aria-current', 'page');
+        try {
+            const linkPath = new URL(link.href, window.location.origin).pathname;
+            if (currentPath === linkPath || currentPath.startsWith(linkPath.replace(/\/$/, ''))) {
+                link.classList.add('active');
+                link.setAttribute('aria-current', 'page');
+            }
+        } catch (e) {
+            // Invalid URL, skip
+            console.warn('Invalid URL for nav link:', link.href);
         }
     });
 }

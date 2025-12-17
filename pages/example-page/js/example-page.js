@@ -53,12 +53,27 @@
             copyBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 const code = block.querySelector('code').textContent;
-                navigator.clipboard.writeText(code).then(() => {
-                    copyBtn.textContent = 'Copied!';
+                
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(code).then(() => {
+                        copyBtn.textContent = 'Copied!';
+                        setTimeout(() => {
+                            copyBtn.textContent = 'Copy';
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy:', err);
+                        copyBtn.textContent = 'Failed!';
+                        setTimeout(() => {
+                            copyBtn.textContent = 'Copy';
+                        }, 2000);
+                    });
+                } else {
+                    // Fallback for browsers without clipboard API
+                    copyBtn.textContent = 'Not supported';
                     setTimeout(() => {
                         copyBtn.textContent = 'Copy';
                     }, 2000);
-                });
+                }
             });
         });
     }

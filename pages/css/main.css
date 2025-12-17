@@ -83,6 +83,31 @@ a:focus {
     outline-offset: 2px;
 }
 
+/* Skip Link for Accessibility */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.skip-link:focus {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: auto;
+    height: auto;
+    padding: 10px 15px;
+    background: #667eea;
+    color: white;
+    border-radius: 5px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
 /* ========================================
    Layout
    ======================================== */
