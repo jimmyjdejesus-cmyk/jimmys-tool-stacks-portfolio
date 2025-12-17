@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page description goes here">
+    <meta name="author" content="Jimmy">
+    <meta name="keywords" content="portfolio, web development, technology">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Page Title">
+    <meta property="og:description" content="Page description">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-site-url.com">
+    
+    <!-- Title -->
+    <title>Page Title - Jimmy's Portfolio</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Page-Specific Styles (if needed) -->
+    <!-- <link rel="stylesheet" href="page-name/css/page-name.css"> -->
+    
+    <!-- Preconnect to external resources for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link" style="position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;">
+        Skip to main content
+    </a>
+    
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Page Title</h1>
+            <p class="subtitle">Page subtitle or description</p>
+        </header>
+        
+        <!-- Navigation -->
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../tools/index.html">Tools</a></li>
+                <li><a href="../blog/index.html">Blog</a></li>
+                <li><a href="about/html/about.html">About</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Main Content -->
+        <main id="main-content">
+            <!-- Section 1 -->
+            <section>
+                <h2>Section Heading</h2>
+                <p>This is a template page demonstrating the structure for all pages in the portfolio.</p>
+                <p>Each page should follow this structure with proper HTML5 semantics, accessibility features, and organized CSS/JS.</p>
+            </section>
+            
+            <!-- Section 2 - Example Card Layout -->
+            <section>
+                <h2>Example Cards</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h3>Card Title 1</h3>
+                        <p>Card content goes here. This demonstrates the card component.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Card Title 2</h3>
+                        <p>Another card with similar styling but different content.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Card Title 3</h3>
+                        <p>Cards are responsive and adapt to different screen sizes.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 3 - Example Buttons -->
+            <section>
+                <h2>Example Buttons</h2>
+                <div class="text-center">
+                    <a href="#" class="btn">Primary Button</a>
+                    <a href="#" class="btn btn-secondary">Secondary Button</a>
+                </div>
+            </section>
+            
+            <!-- Section 4 - Example Form (if needed) -->
+            <section>
+                <h2>Example Form</h2>
+                <form id="example-form">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required aria-required="true">
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required aria-required="true">
+                    
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4" required aria-required="true"></textarea>
+                    
+                    <button type="submit" class="btn">Submit</button>
+                </form>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 Jimmy's Portfolio. Built with ❤️ for foundational skills and continuous learning.</p>
+            <p>
+                <a href="../index.html">Home</a> | 
+                <a href="../portfolio/index.html">Portfolio</a> | 
+                <a href="about/html/about.html">About</a>
+            </p>
+        </footer>
+    </div>
+    
+    <!-- Global JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <!-- Page-Specific JavaScript (if needed) -->
+    <!-- <script src="page-name/js/page-name.js"></script> -->
+    
+    <!-- Example: Handle form submission -->
+    <script>
+        // Page-specific functionality
+        const form = document.getElementById('example-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Form submitted!');
+                // Add your form handling logic here
+                alert('Form submitted successfully!');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+/**
+ * Example Page Specific Styles
+ */
+
+/* ========================================
+   Code Example Styling
+   ======================================== */
+
+.code-example {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+.code-example pre {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.code-example code {
+    color: #f8f8f2;
+}
+
+/* ========================================
+   List Styling
+   ======================================== */
+
+main ul {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+main li {
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+main code {
+    background: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    color: #667eea;
+}
+
+/* ========================================
+   Enhanced Card Styling
+   ======================================== */
+
+.card h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.card p {
+    color: #555;
+    line-height: 1.7;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+    .code-example {
+        padding: 15px;
+        font-size: 0.85rem;
+    }
+    
+    .code-example pre {
+        font-size: 0.8rem;
+    }
+}
