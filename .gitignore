@@ -1,0 +1,66 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary Files
+*.tmp
+*.temp
+*.log
+*.cache
+
+# Build Artifacts
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+
+# Dependencies
+node_modules/
+bower_components/
+vendor/
+
+# Environment Files
+.env
+.env.local
+.env.*.local
+
+# Backup Files
+*.bak
+*.backup
+*~
+
+# Personal Notes (don't commit)
+notes/
+personal/
+scratch/
+drafts/
+
+# Package Manager Files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+composer.lock
+
+# Test Coverage
+coverage/
+.nyc_output/
+*.lcov
