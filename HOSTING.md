@@ -21,7 +21,7 @@ This guide covers the best free hosting platforms for this static portfolio site
    - Source: **GitHub Actions** (recommended for workflow)
    - Or: **Deploy from a branch** → select `main` → `/ (root)`
 3. Wait 1-2 minutes for deployment
-4. Access at: `https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/`
+4. Access at: `https://<username>.github.io/<repo-name>/` (e.g., `https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/`)
 
 ### Custom Domain (Optional)
 1. Buy domain from Namecheap, Google Domains, etc.
@@ -169,12 +169,14 @@ firebase deploy
 
 | Platform | Bandwidth | Build Time | Custom Domain | Functions | Best For |
 |----------|-----------|------------|---------------|-----------|----------|
-| **GitHub Pages** | 100GB/month | Unlimited | ✅ Free SSL | ❌ | **Static sites** |
+| **GitHub Pages** | 100GB/month* | Unlimited | ✅ Free SSL | ❌ | **Static sites** |
 | **Netlify** | 100GB/month | 300 min/month | ✅ Free SSL | ✅ Limited | Advanced features |
 | **Vercel** | 100GB/month | Unlimited | ✅ Free SSL | ✅ Limited | Modern frameworks |
 | **Cloudflare** | **Unlimited** | 500 builds/month | ✅ Free SSL | ✅ Limited | Global performance |
 | **Render** | 100GB/month | Unlimited | ✅ Free SSL | ❌ (paid) | Backend ready |
-| **Firebase** | 10GB storage | Pay per build | ✅ Free SSL | ✅ (paid) | Google ecosystem |
+| **Firebase** | 10GB storage | 10 builds/day free | ✅ Free SSL | ✅ (paid) | Google ecosystem |
+
+*Soft limit, rarely enforced for normal usage
 
 ---
 
@@ -245,7 +247,8 @@ Your current structure is already RAG-friendly:
 
 ### Step 2: Verify Deployment (2 minutes)
 ```bash
-# Visit: https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/
+# Visit: https://<username>.github.io/<repo-name>/
+# Example: https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/
 # Should see your portfolio live!
 ```
 
