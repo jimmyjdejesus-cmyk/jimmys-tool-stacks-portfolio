@@ -33,7 +33,7 @@ This repository contains comprehensive documentation for my entire GitHub ecosys
 ### 🤖 Multi-Agent Systems
 - **[Jarvis_AI](https://github.com/jimmyjdejesus-cmyk/Jarvis_AI)** - Local-first multi-agent orchestration
 - **[agent-scaling-laws](https://github.com/jimmyjdejesus-cmyk/agent-scaling-laws)** - DeepMind research implementation
-- **[allele-ai](https://github.com/jimmyjdejesus-cmyk/allele-ai)** - Phylogenic AI with liquid memory
+- **[Phylogenic-AI-Agents](https://github.com/jimmyjdejesus-cmyk/Phylogenic-AI-Agents)** - Phylogenic AI with liquid memory
 
 ### 🛡️ AI Safety (Guardians Suite)
 - **BiasGuard** - 7-layer semantic bias detection

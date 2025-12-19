@@ -67,7 +67,7 @@ Phone: [PI_PHONE]
 **Value to Institute**: Software platform for neuromorphic research.
 
 #### **4. Phylogenic and Evolutionary AI**
-- **allele-ai**: Phylogenic AI research (whitepaper in preparation)
+- **Phylogenic-AI-Agents**: Phylogenic AI research (whitepaper in preparation)
 - **Synthetic-Intelligence-SI**: Foundational AI cognition research
 - **Evolutionary architecture search**: Automated design optimization
 

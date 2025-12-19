@@ -75,7 +75,7 @@ small-language-models, reasoning, llm, python, transformer
 multi-agent-systems, agent-orchestration, mcp, slm, deep-thinking, speculative-decoding, python, local-first
 ```
 
-**allele-ai:**
+**Phylogenic-AI-Agents:**
 ```
 phylogenic-ai, genetic-algorithms, evolutionary-ai, agent-systems, liquid-memory, python, ai-research
 ```

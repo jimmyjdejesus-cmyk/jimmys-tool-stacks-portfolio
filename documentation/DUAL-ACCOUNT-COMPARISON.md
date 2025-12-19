@@ -11,7 +11,7 @@
 | **Primary Role** | Research & Publications | Production & Engineering |
 | **Visibility** | More public repos | More private repos |
 | **Focus** | Novel AI paradigms | Neuromorphic systems |
-| **Publications** | 2 papers (scaling laws, allele-ai) | Hardware integrations |
+| **Publications** | 2 papers (scaling laws, Phylogenic-AI-Agents) | Hardware integrations |
 | **Orgs** | 8 memberships | 4 memberships |
 
 ---
@@ -33,7 +33,7 @@
 ### jimmyjdejesus-cmyk (Research)
 
 1. **Jarvis_AI** - Multi-agent orchestration (608 commits)
-2. **allele-ai** - Phylogenic AI with whitepaper
+2. **Phylogenic-AI-Agents** - Phylogenic AI with whitepaper
 3. **agent-scaling-laws** - arXiv:2512.08296 implementation
 4. **Abeone-Wetware-Core** - Core wetware architecture
 5. **ContextGuard** - Context management guard

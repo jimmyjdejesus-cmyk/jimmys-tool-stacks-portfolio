@@ -30,9 +30,9 @@
 
 ---
 
-### **2. allele-ai** ⭐ WHITEPAPER IN DEVELOPMENT
+### **2. Phylogenic-AI-Agents** ⭐ WHITEPAPER IN DEVELOPMENT
 
-**Repository**: `jimmyjdejesus-cmyk/allele-ai`  
+**Repository**: `jimmyjdejesus-cmyk/Phylogenic-AI-Agents`  
 **Status**: Public  
 **Type**: Original Research Project  
 

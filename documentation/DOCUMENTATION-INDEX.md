@@ -81,7 +81,7 @@ Agent coordination, phylogenic evolution, and multi-agent orchestration.
 
 **Key Repositories**:
 - `Jarvis_AI` - Master orchestrator (⭐ PRIMARY)
-- `allele-ai` - Phylogenic agents with genetic evolution
+- `Phylogenic-AI-Agents` - Phylogenic agents with genetic evolution
 - `agent-nengo` - Spiking neural network agents
 - `agent-scaling-laws` - Coordination patterns
 - `aiagentsuite` - Enterprise LSP/MCP server

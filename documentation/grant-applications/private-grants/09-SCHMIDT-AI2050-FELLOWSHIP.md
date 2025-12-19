@@ -54,7 +54,7 @@ This approach offers a path to beneficial AI by design—systems that develop al
 - Develop in symbiosis with human communities
 - Inherit safety properties from verified ancestors
 
-My existing work (allele-ai, wetware computing, agent scaling laws) provides the foundation for this research.
+My existing work (Phylogenic-AI-Agents, wetware computing, agent scaling laws) provides the foundation for this research.
 
 ---
 

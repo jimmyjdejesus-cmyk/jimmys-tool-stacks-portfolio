@@ -11,7 +11,7 @@ Based on comprehensive code searches across **both GitHub accounts and all organ
 
 | Research Area | Match Level | Primary Repositories |
 |---------------|-------------|---------------------|
-| 1. Autonomous Scientific Agents | 🟢 **STRONG** | Jarvis_AI, AIGuardians-homebase, allele-ai |
+| 1. Autonomous Scientific Agents | 🟢 **STRONG** | Jarvis_AI, AIGuardians-homebase, Phylogenic-AI-Agents |
 | 2. Materials Science & Chemistry | 🟡 **PARTIAL** | Abeone-Wetware-Core (thermal/durability), abe-research |
 | 3. Biomedical & Fluid Dynamics | 🟢 **STRONG** | abe-research (Navier-Stokes), Abeone-Wetware-Core |
 | 4. Advanced Engineering Design | 🟡 **PARTIAL** | Wetware-IDE, AIGuardians-homebase |
@@ -31,7 +31,7 @@ Based on comprehensive code searches across **both GitHub accounts and all organ
 |------------|-----------|--------------|
 | **[Jarvis_AI](https://github.com/jimmyjdejesus-cmyk/Jarvis_AI)** | 🟢 HIGH | Multi-agent AI orchestration framework; `jarvis_core/audit/` with scanner.py; complex task solving |
 | **[AIGuardians-homebase-source](https://github.com/jimmyjdejesus-cmyk/AIGuardians-homebase-source)** | 🟢 HIGH | `theory_rediscovery.py`, `CONSCIOUSNESS_VISUALIZATION_RESEARCH_BREAKTHROUGH.md`, 149-agent swarm architecture |
-| **[allele-ai](https://github.com/jimmyjdejesus-cmyk/allele-ai)** | 🟢 HIGH | Genetic algorithm-based agent evolution; phylogenic AI with "liquid memory" |
+| **[Phylogenic-AI-Agents](https://github.com/jimmyjdejesus-cmyk/Phylogenic-AI-Agents)** | 🟢 HIGH | Genetic algorithm-based agent evolution; phylogenic AI with "liquid memory" |
 | **[agent-scaling-laws](https://github.com/jimmyjdejesus-cmyk/agent-scaling-laws)** | 🟢 HIGH | DeepMind scaling systems implementation; 5 agent architectures with formal validation |
 | **[local-ai-assistant](https://github.com/jimmyjdejesus-cmyk/local-ai-assistant)** | 🟢 HIGH | `MILLENNIUM_PROBLEMS` files, `theory_rediscovery.py` copies, consciousness technology |
 

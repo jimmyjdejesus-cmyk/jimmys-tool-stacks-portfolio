@@ -81,7 +81,7 @@
 
 ### Top Projects:
 - **Jarvis_AI** - Multi-agent orchestrator (608 commits)
-- **allele-ai** - Phylogenic AI with whitepaper
+- **Phylogenic-AI-Agents** - Phylogenic AI with whitepaper
 - **agent-scaling-laws** - DeepMind research implementation
 - **Abeone-Wetware-Core** - Core wetware architecture
 

@@ -1,0 +1,202 @@
+AI-Guardians CLI aliases loaded!
+Try: aig help, aig status, aig interactive
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName : The term 
+'PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.Parent.FullName' is not recognized as the name of a cmdlet, 
+function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the 
+path is correct and try again.
+At line:1 char:141
++ ... ch-Object { PWD=/c/Users/jimmy/.cursor/jimmys-tool-stacks-portfolio.P ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PWD=/c/Users/ji...Parent.FullName:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 

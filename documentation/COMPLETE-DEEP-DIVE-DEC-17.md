@@ -20,7 +20,7 @@ Your GitHub Ecosystem
 ├── RESEARCH LAYER (jimmyjdejesus-cmyk)
 │   ├── Jarvis_AI (orchestrator)
 │   ├── agent-scaling-laws (scientific foundation)
-│   ├── allele-ai (phylogenic AI)
+│   ├── Phylogenic-AI-Agents (phylogenic AI)
 │   └── wetware systems
 │
 ├── PRODUCTION LAYER (Jimmy-Dejesus)
@@ -48,7 +48,7 @@ Your GitHub Ecosystem
 |---|------------|-------------|
 | 1 | **Abeone-Wetware-Core** | Core wetware architecture |
 | 2 | **Jarvis_AI** | Multi-agent orchestrator (608 commits) |
-| 3 | **allele-ai** | Phylogenic AI (whitepaper) |
+| 3 | **Phylogenic-AI-Agents** | Phylogenic AI (whitepaper) |
 | 4 | **agent-ui** | Frontend interface |
 | 5 | **Dynamic_Trading_Bot** | ML trading bot |
 | 6 | **agent-nengo** | Nengo integration |
@@ -82,7 +82,7 @@ Your GitHub Ecosystem
 
 1. **Massive Scale**: 273+ repos, 8 orgs, 2 accounts
 2. **Active Development**: Multiple repos updated recently
-3. **Research Foundation**: agent-scaling-laws, allele-ai whitepaper
+3. **Research Foundation**: agent-scaling-laws, Phylogenic-AI-Agents whitepaper
 4. **Commercial Products**: AI Guardians Chrome extension (public)
 5. **ML Model Trained**: bias-detection-model with embeddings
 
