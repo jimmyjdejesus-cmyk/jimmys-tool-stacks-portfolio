@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NS-AI-Suite - Enterprise AI Agent Platform Demo | NorthShore AI Suite">
+    <title>NS-AI-Suite Demo | NorthShore AI Platform</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========================================
+           CSS Variables - Dark Cyberpunk Theme
+           ======================================== */
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #0f1520;
+            --bg-card: #131a28;
+            --bg-card-hover: #1a2235;
+            --border-color: #1e2a40;
+            --border-glow: #00d4ff;
+            
+            --text-primary: #e4e8f1;
+            --text-secondary: #8892a6;
+            --text-muted: #5a6478;
+            
+            --accent-primary: #00d4ff;
+            --accent-secondary: #7c3aed;
+            --accent-tertiary: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            
+            --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+            --gradient-glow: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+            --gradient-card: linear-gradient(180deg, rgba(0, 212, 255, 0.05) 0%, transparent 100%);
+            
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 30px rgba(0, 212, 255, 0.2);
+            
+            --font-display: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        /* ========================================
+           Base Styles
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-display);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background Grid */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Gradient Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%);
+            top: -200px;
+            right: -100px;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.3) 0%, transparent 70%);
+            bottom: -150px;
+            left: -100px;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(5deg); }
+            66% { transform: translate(-20px, 20px) rotate(-5deg); }
+        }
+        
+        /* ========================================
+           Layout
+           ======================================== */
+        .app-container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* ========================================
+           Navigation
+           ======================================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(10, 14, 23, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .nav-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+        
+        .nav-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .nav-title span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+        
+        .nav-cta {
+            padding: 0.6rem 1.5rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 8px;
+            color: var(--bg-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+        
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        /* ========================================
+           Hero Section
+           ======================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent-primary);
+            margin-bottom: 2rem;
+            font-family: var(--font-mono);
+        }
+        
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-tertiary);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--bg-primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--accent-primary);
+            background: rgba(0, 212, 255, 0.1);
+        }
+        
+        /* ========================================
+           Stats Bar
+           ======================================== */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 4rem;
+            padding: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: var(--font-mono);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+        }
+        
+        /* ========================================
+           Dashboard Demo Section
+           ======================================== */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Dashboard Preview */
+        .dashboard-preview {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .dashboard-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .dashboard-tab {
+            padding: 0.5rem 1.25rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .dashboard-tab.active {
+            background: var(--gradient-primary);
+            color: var(--bg-primary);
+        }
+        
+        .dashboard-tab:not(.active):hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+        
+        .dashboard-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--accent-tertiary);
+        }
+        
+        .dashboard-status::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--accent-tertiary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .dashboard-body {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        
+        /* Metric Cards */
+        .metric-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+        }
+        
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .metric-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+        
+        .metric-icon.blue { background: rgba(0, 212, 255, 0.15); }
+        .metric-icon.purple { background: rgba(124, 58, 237, 0.15); }
+        .metric-icon.green { background: rgba(16, 185, 129, 0.15); }
+        .metric-icon.yellow { background: rgba(245, 158, 11, 0.15); }
+        
+        .metric-trend {
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .metric-trend.up {
+            color: var(--accent-tertiary);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .metric-trend.down {
+            color: var(--accent-danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        /* ========================================
+           AI Agents Section
+           ======================================== */
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .agent-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .agent-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .agent-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .agent-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: var(--gradient-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+        
+        .agent-info h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .agent-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+        
+        .agent-status.online {
+            color: var(--accent-tertiary);
+        }
+        
+        .agent-status.online::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-tertiary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .agent-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .agent-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .agent-stat {
+            text-align: center;
+        }
+        
+        .agent-stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--accent-primary);
+        }
+        
+        .agent-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* ========================================
+           Architecture Section
+           ======================================== */
+        .architecture-diagram {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            position: relative;
+        }
+        
+        .arch-layer {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .arch-layer:last-child {
+            margin-bottom: 0;
+        }
+        
+        .arch-node {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .arch-node:hover {
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .arch-node.primary {
+            border-color: var(--accent-primary);
+            background: linear-gradient(180deg, rgba(0, 212, 255, 0.1) 0%, var(--bg-secondary) 100%);
+        }
+        
+        .arch-node-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .arch-node-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .arch-node-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .arch-connector {
+            display: flex;
+            justify-content: center;
+            margin: -0.5rem 0;
+        }
+        
+        .arch-connector svg {
+            stroke: var(--accent-primary);
+            opacity: 0.5;
+        }
+        
+        /* ========================================
+           Features Section
+           ======================================== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: var(--gradient-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* ========================================
+           Live Demo Console
+           ======================================== */
+        .console-demo {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .console-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .console-dots {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .console-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .console-dot.red { background: #ff5f57; }
+        .console-dot.yellow { background: #febc2e; }
+        .console-dot.green { background: #28c840; }
+        
+        .console-title {
+            flex: 1;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .console-body {
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.8;
+            min-height: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .console-line {
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+        }
+        
+        .console-line.prompt {
+            color: var(--accent-primary);
+        }
+        
+        .console-line.success {
+            color: var(--accent-tertiary);
+        }
+        
+        .console-line.info {
+            color: var(--text-secondary);
+        }
+        
+        .console-line.warning {
+            color: var(--accent-warning);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* ========================================
+           Footer
+           ======================================== */
+        .footer {
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-primary);
+        }
+        
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .footer-copyright a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        /* ========================================
+           Responsive Design
+           ======================================== */
+        @media (max-width: 1024px) {
+            .dashboard-body {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 7rem 1.5rem 3rem;
+            }
+            
+            .stats-bar {
+                gap: 2rem;
+            }
+            
+            .dashboard-body {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .arch-layer {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section {
+                padding: 4rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .agent-stats {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <a href="../../index.html" class="nav-brand">
+                    <div class="nav-logo">NS</div>
+                    <div class="nav-title"><span>NS-AI-Suite</span></div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#agents">AI Agents</a></li>
+                    <li><a href="#architecture">Architecture</a></li>
+                    <li><a href="#features">Features</a></li>
+                </ul>
+                <button class="nav-cta" onclick="scrollToDemo()">View Demo</button>
+            </div>
+        </nav>
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <span class="hero-badge">Enterprise AI Platform v2.0</span>
+            <h1>
+                <span class="highlight">NorthShore</span><br>
+                AI Suite
+            </h1>
+            <p class="hero-subtitle">
+                Next-generation enterprise AI agent platform featuring autonomous multi-agent orchestration, 
+                intelligent automation, and real-time business intelligence for the modern enterprise.
+            </p>
+            <div class="hero-actions">
+                <a href="#dashboard" class="btn btn-primary">
+                    <span>🎯</span> Explore Dashboard
+                </a>
+                <a href="https://github.com/NS-AI-Suite" target="_blank" class="btn btn-secondary">
+                    <span>📂</span> View on GitHub
+                </a>
+            </div>
+            
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-value">8+</div>
+                    <div class="stat-label">AI Agents</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">99.9%</div>
+                    <div class="stat-label">Uptime SLA</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">&lt;50ms</div>
+                    <div class="stat-label">Response Time</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Autonomous Ops</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Dashboard Demo Section -->
+        <section id="dashboard" class="section">
+            <div class="section-header">
+                <div class="section-label">Live Dashboard</div>
+                <h2 class="section-title">Real-Time Operations Center</h2>
+                <p class="section-desc">Monitor all AI agents, system performance, and business metrics from a unified control panel.</p>
+            </div>
+            
+            <div class="dashboard-preview">
+                <div class="dashboard-header">
+                    <div class="dashboard-tabs">
+                        <button class="dashboard-tab active">Overview</button>
+                        <button class="dashboard-tab">Agents</button>
+                        <button class="dashboard-tab">Analytics</button>
+                        <button class="dashboard-tab">Logs</button>
+                    </div>
+                    <div class="dashboard-status">All Systems Operational</div>
+                </div>
+                <div class="dashboard-body">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon blue">🤖</div>
+                            <span class="metric-trend up">+12%</span>
+                        </div>
+                        <div class="metric-value" id="active-agents">8</div>
+                        <div class="metric-label">Active AI Agents</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon purple">📊</div>
+                            <span class="metric-trend up">+24%</span>
+                        </div>
+                        <div class="metric-value" id="tasks-completed">1,247</div>
+                        <div class="metric-label">Tasks Completed Today</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon green">⚡</div>
+                            <span class="metric-trend up">-8%</span>
+                        </div>
+                        <div class="metric-value" id="response-time">42ms</div>
+                        <div class="metric-label">Avg Response Time</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-icon yellow">🎯</div>
+                            <span class="metric-trend up">+3%</span>
+                        </div>
+                        <div class="metric-value" id="accuracy-rate">98.7%</div>
+                        <div class="metric-label">Accuracy Rate</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- AI Agents Section -->
+        <section id="agents" class="section">
+            <div class="section-header">
+                <div class="section-label">AI Agent Network</div>
+                <h2 class="section-title">Intelligent Autonomous Agents</h2>
+                <p class="section-desc">Specialized AI agents working together to automate and optimize enterprise operations.</p>
+            </div>
+            
+            <div class="agents-grid">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon">🖨️</div>
+                        <div class="agent-info">
+                            <h3>Printer AI</h3>
+                            <div class="agent-status online">Online</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Intelligent print management with predictive maintenance, supply forecasting, and automated fleet optimization.</p>
+                    <div class="agent-stats">
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">847</div>
+                            <div class="agent-stat-label">Jobs/Day</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">99.2%</div>
+                            <div class="agent-stat-label">Uptime</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">23%</div>
+                            <div class="agent-stat-label">Cost Saved</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon">🌐</div>
+                        <div class="agent-info">
+                            <h3>Network AI</h3>
+                            <div class="agent-status online">Online</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Real-time network monitoring, anomaly detection, and automated threat response with predictive analytics.</p>
+                    <div class="agent-stats">
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">2.4K</div>
+                            <div class="agent-stat-label">Nodes</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">0</div>
+                            <div class="agent-stat-label">Threats</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">99.9%</div>
+                            <div class="agent-stat-label">Secure</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon">🎧</div>
+                        <div class="agent-info">
+                            <h3>Helpdesk AI</h3>
+                            <div class="agent-status online">Online</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">AI-powered IT support with intelligent ticket routing, automated resolution, and proactive user assistance.</p>
+                    <div class="agent-stats">
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">312</div>
+                            <div class="agent-stat-label">Tickets</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">4.8</div>
+                            <div class="agent-stat-label">Satisfaction</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">67%</div>
+                            <div class="agent-stat-label">Auto-Resolved</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon">📋</div>
+                        <div class="agent-info">
+                            <h3>Frontdesk AI</h3>
+                            <div class="agent-status online">Online</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Intelligent reception automation with visitor management, scheduling, and multi-channel communication.</p>
+                    <div class="agent-stats">
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">156</div>
+                            <div class="agent-stat-label">Visitors</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">89%</div>
+                            <div class="agent-stat-label">Automated</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">12s</div>
+                            <div class="agent-stat-label">Avg Wait</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon">📊</div>
+                        <div class="agent-info">
+                            <h3>Analytics AI</h3>
+                            <div class="agent-status online">Online</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Advanced business intelligence with predictive analytics, trend detection, and automated reporting.</p>
+                    <div class="agent-stats">
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">47</div>
+                            <div class="agent-stat-label">Reports</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">1.2M</div>
+                            <div class="agent-stat-label">Data Points</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">94%</div>
+                            <div class="agent-stat-label">Accuracy</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon">✅</div>
+                        <div class="agent-info">
+                            <h3>Compliance AI</h3>
+                            <div class="agent-status online">Online</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Automated compliance monitoring, policy enforcement, and regulatory requirement tracking.</p>
+                    <div class="agent-stats">
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">24</div>
+                            <div class="agent-stat-label">Policies</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">100%</div>
+                            <div class="agent-stat-label">Compliant</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">0</div>
+                            <div class="agent-stat-label">Violations</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon">🔧</div>
+                        <div class="agent-info">
+                            <h3>Predictive Maintenance</h3>
+                            <div class="agent-status online">Online</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">ML-powered equipment monitoring with failure prediction and automated maintenance scheduling.</p>
+                    <div class="agent-stats">
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">234</div>
+                            <div class="agent-stat-label">Assets</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">3</div>
+                            <div class="agent-stat-label">Alerts</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">41%</div>
+                            <div class="agent-stat-label">Downtime ↓</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-icon">💼</div>
+                        <div class="agent-info">
+                            <h3>OfficeMate AI</h3>
+                            <div class="agent-status online">Online</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Intelligent workspace management with resource optimization, meeting scheduling, and facility coordination.</p>
+                    <div class="agent-stats">
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">12</div>
+                            <div class="agent-stat-label">Rooms</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">78%</div>
+                            <div class="agent-stat-label">Utilization</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">34</div>
+                            <div class="agent-stat-label">Meetings</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Architecture Section -->
+        <section id="architecture" class="section">
+            <div class="section-header">
+                <div class="section-label">System Architecture</div>
+                <h2 class="section-title">Enterprise-Grade Infrastructure</h2>
+                <p class="section-desc">Microservices architecture designed for scalability, resilience, and security.</p>
+            </div>
+            
+            <div class="architecture-diagram">
+                <!-- Layer 1: Clients -->
+                <div class="arch-layer">
+                    <div class="arch-node">
+                        <div class="arch-node-icon">🖥️</div>
+                        <div class="arch-node-title">Web Dashboard</div>
+                        <div class="arch-node-desc">React SPA</div>
+                    </div>
+                    <div class="arch-node">
+                        <div class="arch-node-icon">📱</div>
+                        <div class="arch-node-title">Mobile Apps</div>
+                        <div class="arch-node-desc">iOS & Android</div>
+                    </div>
+                    <div class="arch-node">
+                        <div class="arch-node-icon">🔌</div>
+                        <div class="arch-node-title">API Clients</div>
+                        <div class="arch-node-desc">REST & GraphQL</div>
+                    </div>
+                </div>
+                
+                <!-- Connector -->
+                <div class="arch-connector">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <path d="M20 0 L20 40" stroke-width="2" fill="none" stroke-dasharray="4"/>
+                    </svg>
+                </div>
+                
+                <!-- Layer 2: API Gateway -->
+                <div class="arch-layer">
+                    <div class="arch-node primary">
+                        <div class="arch-node-icon">🚪</div>
+                        <div class="arch-node-title">API Gateway</div>
+                        <div class="arch-node-desc">Auth, Rate Limiting, Routing</div>
+                    </div>
+                </div>
+                
+                <!-- Connector -->
+                <div class="arch-connector">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <path d="M20 0 L20 40" stroke-width="2" fill="none" stroke-dasharray="4"/>
+                    </svg>
+                </div>
+                
+                <!-- Layer 3: Core Services -->
+                <div class="arch-layer">
+                    <div class="arch-node primary">
+                        <div class="arch-node-icon">🧠</div>
+                        <div class="arch-node-title">NS Agent Core</div>
+                        <div class="arch-node-desc">Orchestration Engine</div>
+                    </div>
+                    <div class="arch-node primary">
+                        <div class="arch-node-icon">🛡️</div>
+                        <div class="arch-node-title">Guardian Core</div>
+                        <div class="arch-node-desc">Security & Compliance</div>
+                    </div>
+                </div>
+                
+                <!-- Connector -->
+                <div class="arch-connector">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <path d="M20 0 L20 40" stroke-width="2" fill="none" stroke-dasharray="4"/>
+                    </svg>
+                </div>
+                
+                <!-- Layer 4: AI Agents -->
+                <div class="arch-layer">
+                    <div class="arch-node">
+                        <div class="arch-node-icon">🖨️</div>
+                        <div class="arch-node-title">Printer AI</div>
+                    </div>
+                    <div class="arch-node">
+                        <div class="arch-node-icon">🌐</div>
+                        <div class="arch-node-title">Network AI</div>
+                    </div>
+                    <div class="arch-node">
+                        <div class="arch-node-icon">🎧</div>
+                        <div class="arch-node-title">Helpdesk AI</div>
+                    </div>
+                    <div class="arch-node">
+                        <div class="arch-node-icon">📊</div>
+                        <div class="arch-node-title">Analytics AI</div>
+                    </div>
+                </div>
+                
+                <!-- Connector -->
+                <div class="arch-connector">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <path d="M20 0 L20 40" stroke-width="2" fill="none" stroke-dasharray="4"/>
+                    </svg>
+                </div>
+                
+                <!-- Layer 5: Infrastructure -->
+                <div class="arch-layer">
+                    <div class="arch-node">
+                        <div class="arch-node-icon">📥</div>
+                        <div class="arch-node-title">Data Ingestion</div>
+                        <div class="arch-node-desc">Kafka Streams</div>
+                    </div>
+                    <div class="arch-node">
+                        <div class="arch-node-icon">💾</div>
+                        <div class="arch-node-title">Database</div>
+                        <div class="arch-node-desc">PostgreSQL + Redis</div>
+                    </div>
+                    <div class="arch-node">
+                        <div class="arch-node-icon">📈</div>
+                        <div class="arch-node-title">Monitoring</div>
+                        <div class="arch-node-desc">Prometheus + Grafana</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section id="features" class="section">
+            <div class="section-header">
+                <div class="section-label">Platform Capabilities</div>
+                <h2 class="section-title">Enterprise Features</h2>
+                <p class="section-desc">Built for scale, security, and seamless integration.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Enterprise Security</h3>
+                    <p>End-to-end encryption, SSO integration, role-based access control, and comprehensive audit logging for complete data protection.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Infinite Scalability</h3>
+                    <p>Kubernetes-native architecture with auto-scaling, load balancing, and multi-region deployment for global operations.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Seamless Integration</h3>
+                    <p>Pre-built connectors for major enterprise systems including SAP, Salesforce, ServiceNow, and custom REST/GraphQL APIs.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🧪</div>
+                    <h3>Advanced ML Pipeline</h3>
+                    <p>Automated model training, versioning, A/B testing, and continuous learning for ever-improving AI performance.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-Time Analytics</h3>
+                    <p>Stream processing with sub-second latency, customizable dashboards, and predictive insights for data-driven decisions.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Guardian Protection</h3>
+                    <p>AI safety guardrails, bias detection, output validation, and compliance automation for responsible AI deployment.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Console Demo Section -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-label">Live Demo</div>
+                <h2 class="section-title">Agent Communication</h2>
+                <p class="section-desc">Watch the AI agents communicate in real-time.</p>
+            </div>
+            
+            <div class="console-demo">
+                <div class="console-header">
+                    <div class="console-dots">
+                        <div class="console-dot red"></div>
+                        <div class="console-dot yellow"></div>
+                        <div class="console-dot green"></div>
+                    </div>
+                    <div class="console-title">ns-agent-core@orchestrator ~ agent-network</div>
+                </div>
+                <div class="console-body" id="console-output">
+                    <!-- Console lines will be injected here -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-brand">
+                <div class="nav-logo">NS</div>
+                <div class="nav-title"><span>NS-AI-Suite</span></div>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/NS-AI-Suite" target="_blank">GitHub Organization</a>
+                <a href="../../index.html">Portfolio Home</a>
+                <a href="../../portfolio/index.html">All Projects</a>
+            </div>
+            <p class="footer-copyright">
+                © 2024 NorthShore AI Suite | Built by <a href="https://github.com/jimmyjdejesus-cmyk" target="_blank">Jimmy DeJesus</a>
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        // ==========================================
+        // Dashboard Tab Switching
+        // ==========================================
+        const tabs = document.querySelectorAll('.dashboard-tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+        
+        // ==========================================
+        // Live Metrics Animation
+        // ==========================================
+        function animateValue(element, start, end, duration, suffix = '') {
+            const range = end - start;
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(start + range * easeProgress);
+                element.textContent = current.toLocaleString() + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+        
+        // Animate metrics on scroll
+        const metricsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateValue(document.getElementById('active-agents'), 0, 8, 1500);
+                    animateValue(document.getElementById('tasks-completed'), 0, 1247, 2000);
+                    animateValue(document.getElementById('response-time'), 0, 42, 1200, 'ms');
+                    animateValue(document.getElementById('accuracy-rate'), 0, 98.7, 1800, '%');
+                    metricsObserver.disconnect();
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        const dashboard = document.getElementById('dashboard');
+        if (dashboard) {
+            metricsObserver.observe(dashboard);
+        }
+        
+        // ==========================================
+        // Console Animation
+        // ==========================================
+        const consoleMessages = [
+            { type: 'prompt', text: '$ ns-agent orchestrator --status' },
+            { type: 'info', text: '[INFO] Connecting to NS-AI-Suite cluster...' },
+            { type: 'success', text: '[SUCCESS] Connected to orchestrator node (us-east-1)' },
+            { type: 'info', text: '' },
+            { type: 'prompt', text: '> Querying active agents...' },
+            { type: 'success', text: '  ✓ printer-ai      [ONLINE]  health: 100%  tasks: 847' },
+            { type: 'success', text: '  ✓ network-ai      [ONLINE]  health: 100%  nodes: 2,412' },
+            { type: 'success', text: '  ✓ helpdesk-ai     [ONLINE]  health: 100%  tickets: 312' },
+            { type: 'success', text: '  ✓ frontdesk-ai    [ONLINE]  health: 100%  visitors: 156' },
+            { type: 'success', text: '  ✓ analytics-ai    [ONLINE]  health: 100%  reports: 47' },
+            { type: 'success', text: '  ✓ compliance-ai   [ONLINE]  health: 100%  policies: 24' },
+            { type: 'success', text: '  ✓ maintenance-ai  [ONLINE]  health: 100%  assets: 234' },
+            { type: 'success', text: '  ✓ officemate-ai   [ONLINE]  health: 100%  rooms: 12' },
+            { type: 'info', text: '' },
+            { type: 'prompt', text: '> guardian-core security check...' },
+            { type: 'success', text: '[GUARDIAN] All safety checks passed ✓' },
+            { type: 'success', text: '[GUARDIAN] Bias detection: No anomalies' },
+            { type: 'success', text: '[GUARDIAN] Compliance status: VERIFIED' },
+            { type: 'info', text: '' },
+            { type: 'warning', text: '[EVENT] helpdesk-ai: New high-priority ticket #4521' },
+            { type: 'info', text: '[AUTO] Routing to network-ai for analysis...' },
+            { type: 'success', text: '[RESOLVED] Ticket #4521 auto-resolved (2.3s)' },
+            { type: 'info', text: '' },
+            { type: 'prompt', text: '$ System operational. All agents synchronized.' },
+        ];
+        
+        let consoleIndex = 0;
+        const consoleOutput = document.getElementById('console-output');
+        
+        function addConsoleLine() {
+            if (consoleIndex >= consoleMessages.length) {
+                consoleIndex = 0;
+                consoleOutput.innerHTML = '';
+            }
+            
+            const msg = consoleMessages[consoleIndex];
+            const line = document.createElement('div');
+            line.className = `console-line ${msg.type}`;
+            line.style.animationDelay = '0.1s';
+            line.textContent = msg.text || ' ';
+            consoleOutput.appendChild(line);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            
+            consoleIndex++;
+        }
+        
+        // Start console animation when in view
+        const consoleObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setInterval(addConsoleLine, 800);
+                    consoleObserver.disconnect();
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        if (consoleOutput) {
+            consoleObserver.observe(consoleOutput.parentElement);
+        }
+        
+        // ==========================================
+        // Smooth Scroll
+        // ==========================================
+        function scrollToDemo() {
+            document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Smooth scroll for all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // ==========================================
+        // Agent Card Hover Effects
+        // ==========================================
+        document.querySelectorAll('.agent-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
+
