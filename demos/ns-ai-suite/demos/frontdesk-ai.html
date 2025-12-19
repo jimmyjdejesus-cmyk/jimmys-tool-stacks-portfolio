@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontdesk AI | NS-AI-Suite Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1a2234;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #7c3aed;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: rgba(0, 212, 255, 0.2);
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 1.5rem 2rem;
+            background: rgba(17, 24, 39, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--accent-primary); }
+        .breadcrumb span { color: var(--text-muted); }
+        .breadcrumb .current { color: var(--accent-secondary); font-weight: 600; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+            color: white;
+        }
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .hero-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-success);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .section { margin-bottom: 4rem; }
+        .section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .metric-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        /* Chat Demo */
+        .chat-demo {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .chat-header {
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .chat-header .avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .chat-header .info .name { font-weight: 600; }
+        .chat-header .info .status { font-size: 0.8rem; opacity: 0.9; }
+        .chat-messages {
+            padding: 1.5rem;
+            min-height: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .message {
+            max-width: 85%;
+            padding: 1rem;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .message.bot {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .message.user {
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .message .time {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        .message.user .time { color: rgba(255,255,255,0.7); }
+        .chat-input {
+            border-top: 1px solid var(--border-color);
+            padding: 1rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+        .chat-input input {
+            flex: 1;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+        .chat-input button {
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .capability-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .capability-card .icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(124, 58, 237, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        .capability-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.35rem;
+        }
+        .capability-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        footer a { color: var(--accent-primary); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    
+    <header>
+        <div class="breadcrumb">
+            <a href="../hub.html">Repository Hub</a>
+            <span>›</span>
+            <span class="current">frontdesk-ai</span>
+        </div>
+        <a href="https://github.com/NS-AI-Suite/frontdesk-ai" class="btn" target="_blank">
+            <span>📂</span> View Source
+        </a>
+    </header>
+
+    <main>
+        <div class="hero">
+            <div class="hero-icon">👋</div>
+            <h1>frontdesk-ai</h1>
+            <p>Intelligent front desk assistant for visitor management, scheduling, and first-contact interactions. The friendly face of your enterprise AI.</p>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                Production Ready
+            </div>
+        </div>
+
+        <section class="section">
+            <h2>📊 Agent Metrics</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">847</div>
+                    <div class="metric-label">Visitors Today</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">98%</div>
+                    <div class="metric-label">Resolution Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">2.3s</div>
+                    <div class="metric-label">Avg Response</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">4.9⭐</div>
+                    <div class="metric-label">Satisfaction</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>💬 Live Demo</h2>
+            <div class="chat-demo">
+                <div class="chat-header">
+                    <div class="avatar">👋</div>
+                    <div class="info">
+                        <div class="name">Frontdesk AI</div>
+                        <div class="status">🟢 Online • Ready to help</div>
+                    </div>
+                </div>
+                <div class="chat-messages">
+                    <div class="message bot">
+                        Welcome to NorthShore! I'm your AI front desk assistant. How can I help you today?
+                        <div class="time">10:30 AM</div>
+                    </div>
+                    <div class="message user">
+                        I have a meeting with Jane Smith at 2pm
+                        <div class="time">10:30 AM</div>
+                    </div>
+                    <div class="message bot">
+                        I found your appointment! ✓<br><br>
+                        <strong>Meeting Details:</strong><br>
+                        📅 Today at 2:00 PM<br>
+                        👤 Host: Jane Smith (Engineering)<br>
+                        📍 Conference Room 4B<br><br>
+                        I've notified Jane of your arrival. Would you like me to print a visitor badge?
+                        <div class="time">10:30 AM</div>
+                    </div>
+                    <div class="message user">
+                        Yes please, and can I get WiFi access?
+                        <div class="time">10:31 AM</div>
+                    </div>
+                    <div class="message bot">
+                        Absolutely! 🎫<br><br>
+                        <strong>Visitor Badge:</strong> Printing at Front Desk<br>
+                        <strong>WiFi Network:</strong> NS-Guest<br>
+                        <strong>Password:</strong> Welcome2024!<br><br>
+                        Jane is on her way to meet you. The average wait time is about 3 minutes. Can I get you anything while you wait?
+                        <div class="time">10:31 AM</div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Type your message..." disabled>
+                    <button disabled>Send</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🎯 Capabilities</h2>
+            <div class="capability-grid">
+                <div class="capability-card">
+                    <div class="icon">📅</div>
+                    <div>
+                        <h4>Meeting Scheduling</h4>
+                        <p>Book, reschedule, and cancel meetings with natural language</p>
+                    </div>
+                </div>
+                <div class="capability-card">
+                    <div class="icon">🎫</div>
+                    <div>
+                        <h4>Visitor Check-in</h4>
+                        <p>Streamlined check-in with badge printing and host notification</p>
+                    </div>
+                </div>
+                <div class="capability-card">
+                    <div class="icon">🗺️</div>
+                    <div>
+                        <h4>Wayfinding</h4>
+                        <p>Guide visitors to meeting rooms, amenities, and offices</p>
+                    </div>
+                </div>
+                <div class="capability-card">
+                    <div class="icon">📞</div>
+                    <div>
+                        <h4>Call Routing</h4>
+                        <p>Intelligent call transfer to the right department or person</p>
+                    </div>
+                </div>
+                <div class="capability-card">
+                    <div class="icon">📦</div>
+                    <div>
+                        <h4>Package Handling</h4>
+                        <p>Log deliveries and notify recipients automatically</p>
+                    </div>
+                </div>
+                <div class="capability-card">
+                    <div class="icon">🌍</div>
+                    <div>
+                        <h4>Multilingual</h4>
+                        <p>Communicate in 40+ languages with real-time translation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p><a href="../hub.html">← Back to Repository Hub</a> | <a href="../index.html">Main Demo</a></p>
+    </footer>
+</body>
+</html>
+

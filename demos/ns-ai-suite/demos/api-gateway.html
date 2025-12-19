@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Gateway | NS-AI-Suite Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1a2234;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #7c3aed;
+            --accent-success: #10b981;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: rgba(0, 212, 255, 0.2);
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 1.5rem 2rem;
+            background: rgba(17, 24, 39, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--accent-primary); }
+        .breadcrumb span { color: var(--text-muted); }
+        .breadcrumb .current { color: var(--accent-primary); font-weight: 600; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+        }
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .hero-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #64748b, #475569);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 20px 60px rgba(100, 116, 139, 0.3);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-success);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .section { margin-bottom: 4rem; }
+        .section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .endpoints {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .endpoint {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .method {
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 70px;
+            text-align: center;
+        }
+        .method.get { background: #065f46; color: #10b981; }
+        .method.post { background: #1e40af; color: #60a5fa; }
+        .method.put { background: #92400e; color: #fbbf24; }
+        .method.delete { background: #991b1b; color: #f87171; }
+        .endpoint-path {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-primary);
+            flex: 1;
+        }
+        .endpoint-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .metric-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .code-block {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        footer a { color: var(--accent-primary); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    
+    <header>
+        <div class="breadcrumb">
+            <a href="../hub.html">Repository Hub</a>
+            <span>›</span>
+            <span class="current">api-gateway</span>
+        </div>
+        <a href="https://github.com/NS-AI-Suite/api-gateway" class="btn" target="_blank">
+            <span>📂</span> View Source
+        </a>
+    </header>
+
+    <main>
+        <div class="hero">
+            <div class="hero-icon">🌐</div>
+            <h1>api-gateway</h1>
+            <p>Unified API gateway for all NS-AI-Suite services. Handles routing, authentication, rate limiting, and request/response transformation.</p>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                Production Ready
+            </div>
+        </div>
+
+        <section class="section">
+            <h2>📊 Gateway Metrics</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">&lt;5ms</div>
+                    <div class="metric-label">Avg Latency</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">50K</div>
+                    <div class="metric-label">Req/sec Max</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">8</div>
+                    <div class="metric-label">Services Routed</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">99.99%</div>
+                    <div class="metric-label">Uptime</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🔌 API Endpoints</h2>
+            <div class="endpoints">
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <span class="endpoint-path">/api/v1/agents</span>
+                    <span class="endpoint-desc">List all available AI agents</span>
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <span class="endpoint-path">/api/v1/agents/{id}/invoke</span>
+                    <span class="endpoint-desc">Invoke a specific agent with task</span>
+                </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <span class="endpoint-path">/api/v1/tasks</span>
+                    <span class="endpoint-desc">Get all tasks and their status</span>
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <span class="endpoint-path">/api/v1/auth/token</span>
+                    <span class="endpoint-desc">Generate API access token</span>
+                </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <span class="endpoint-path">/api/v1/metrics</span>
+                    <span class="endpoint-desc">System metrics and health</span>
+                </div>
+                <div class="endpoint">
+                    <span class="method put">PUT</span>
+                    <span class="endpoint-path">/api/v1/config</span>
+                    <span class="endpoint-desc">Update gateway configuration</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🚀 Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🔐 JWT Authentication</h3>
+                    <p>Secure token-based auth with refresh tokens and role-based access control.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⚖️ Load Balancing</h3>
+                    <p>Intelligent traffic distribution across service instances with health checks.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🚦 Rate Limiting</h3>
+                    <p>Configurable rate limits per user, API key, or IP address.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📝 Request Logging</h3>
+                    <p>Complete request/response logging for debugging and compliance.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔄 Circuit Breaker</h3>
+                    <p>Automatic failover and recovery for downstream service failures.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 Prometheus Metrics</h3>
+                    <p>Built-in metrics export for Grafana dashboards and alerting.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>💻 Example Request</h2>
+            <div class="code-block">
+curl -X POST https://api.ns-ai-suite.com/v1/agents/frontdesk/invoke \<br>
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..." \<br>
+  -H "Content-Type: application/json" \<br>
+  -d '{<br>
+    "task": "schedule_meeting",<br>
+    "params": {<br>
+      "visitor": "John Smith",<br>
+      "date": "2024-12-20",<br>
+      "time": "14:00",<br>
+      "host": "jane.doe@northshore.com"<br>
+    }<br>
+  }'
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p><a href="../hub.html">← Back to Repository Hub</a> | <a href="../index.html">Main Demo</a></p>
+    </footer>
+</body>
+</html>
+
