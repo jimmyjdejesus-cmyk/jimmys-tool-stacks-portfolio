@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Research Hub by Jimmy De Jesus - Comprehensive collection of open-source AI/ML research implementations including Phylogenic AI Agents (evolutionary AI), Agent Scaling Laws (arXiv:2512.08296), multi-agent systems, and enterprise AI platforms.">
+    <meta name="keywords" content="AI research, machine learning, phylogenic AI, agent scaling laws, multi-agent systems, evolutionary AI, genetic algorithms, arXiv, open source AI, LLM fine-tuning, distributed AI, Jimmy De Jesus">
+    <meta name="author" content="Jimmy De Jesus">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/ai-research/">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AI Research Hub | Jimmy De Jesus">
+    <meta property="og:description" content="Open-source AI/ML research: Phylogenic AI Agents, Agent Scaling Laws (arXiv:2512.08296), multi-agent systems, and more.">
+    <meta property="og:url" content="https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/ai-research/">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Research Hub | Evolutionary AI & Multi-Agent Systems">
+    <meta name="twitter:description" content="Open-source implementations of cutting-edge AI research by Jimmy De Jesus.">
+    
+    <title>AI Research Hub | Phylogenic AI, Agent Scaling Laws & Multi-Agent Systems</title>
+    
+    <!-- CollectionPage Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "AI Research Hub",
+        "description": "Comprehensive collection of open-source AI/ML research implementations including evolutionary AI, multi-agent systems, and enterprise AI platforms",
+        "url": "https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/ai-research/",
+        "author": {
+            "@type": "Person",
+            "name": "Jimmy De Jesus"
+        },
+        "hasPart": [
+            {
+                "@type": "SoftwareApplication",
+                "name": "Phylogenic AI Agents",
+                "description": "Genetic evolution framework for AI agent personalities with liquid memory and ML analytics",
+                "url": "https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/phylogenic-ai/"
+            },
+            {
+                "@type": "SoftwareApplication",
+                "name": "Agent Scaling Laws",
+                "description": "Implementation of multi-agent coordination architectures from arXiv:2512.08296",
+                "url": "https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/agent-scaling/"
+            }
+        ]
+    }
+    </script>
+    
+    <!-- FAQPage Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is evolutionary AI?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Evolutionary AI applies principles from biological evolution—genetic algorithms, mutation, crossover, and natural selection—to optimize AI systems. In Phylogenic AI, agents evolve personality traits across generations, automatically discovering optimal behaviors through fitness-based selection rather than manual tuning."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do multi-agent systems scale?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Multi-agent systems face coordination overhead that typically scales as O(n²) with agent count in flat topologies. Research paper arXiv:2512.08296 'Towards a Science of Scaling Agent Systems' establishes that hierarchical structures can reduce this to O(n log n), and the Agent Scaling Laws implementation provides production-ready patterns for this."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the difference between prompt engineering and evolutionary AI?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Prompt engineering manually crafts static instructions for AI models, requiring human expertise and iteration. Evolutionary AI (like Phylogenic AI Agents) automatically evolves optimal behaviors through genetic algorithms—agents self-improve based on feedback, discovering non-obvious improvements without human intervention."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What programming languages are used in these AI research projects?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "These projects primarily use Python 3.8+ with type hints for IDE support. They integrate with LLM providers (OpenAI, Anthropic, Ollama), use NumPy for numerical operations, support async execution for performance, and follow modern software engineering practices with comprehensive test coverage."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are these AI research projects open source?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, both Phylogenic AI Agents and Agent Scaling Laws are open-source under the MIT License. They are available on GitHub with full documentation, examples, and test suites. Contributions are welcome."
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --accent-orange: #f59e0b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #2d2d3a;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 25px;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover { color: var(--accent-blue); }
+        
+        .hero {
+            padding: 80px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(59, 130, 246, 0.05));
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .research-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 35px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        .research-card.green::before { background: var(--accent-green); }
+        .research-card.blue::before { background: var(--accent-blue); }
+        .research-card.purple::before { background: var(--accent-purple); }
+        .research-card.orange::before { background: var(--accent-orange); }
+        
+        .research-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .card-icon { font-size: 2.5rem; }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .green .card-title { color: var(--accent-green); }
+        .blue .card-title { color: var(--accent-blue); }
+        .purple .card-title { color: var(--accent-purple); }
+        .orange .card-title { color: var(--accent-orange); }
+        
+        .card-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .tag {
+            background: rgba(255,255,255,0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .card-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .card-link {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .card-link.primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+        
+        .card-link.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        
+        .card-link:hover {
+            transform: translateY(-2px);
+        }
+        
+        .faq-section {
+            padding: 60px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .faq-item h3 {
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+        
+        .faq-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        footer {
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .research-grid { grid-template-columns: 1fr; padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">🔬 AI Research Hub</div>
+        <nav>
+            <a href="../phylogenic-ai/">Phylogenic AI</a>
+            <a href="../agent-scaling/">Scaling Laws</a>
+            <a href="../agent-ui/">Agent UI</a>
+            <a href="../../portfolio/">Portfolio</a>
+            <a href="../../">Home</a>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h1>AI Research Hub</h1>
+        <p class="subtitle">Open-source implementations of cutting-edge AI/ML research. Evolutionary AI, multi-agent systems, scaling laws, and enterprise platforms—all with production-ready code, comprehensive documentation, and MIT licensing.</p>
+    </section>
+    
+    <main class="research-grid">
+        <!-- Phylogenic AI -->
+        <article class="research-card green" itemscope itemtype="https://schema.org/SoftwareApplication">
+            <div class="card-header">
+                <span class="card-icon">🧬</span>
+                <h2 class="card-title" itemprop="name">Phylogenic AI Agents</h2>
+            </div>
+            <p class="card-description" itemprop="description">
+                <strong>Genetic evolution for AI personalities.</strong> Self-optimizing agents with liquid memory, ML analytics, and evolutionary optimization. Agents inherit traits, mutate behaviors, and undergo fitness-based selection across generations.
+            </p>
+            <div class="card-tags">
+                <span class="tag">Genetic Algorithms</span>
+                <span class="tag">Liquid Memory</span>
+                <span class="tag">ML Analytics</span>
+                <span class="tag">Python</span>
+                <span class="tag">MIT License</span>
+            </div>
+            <div class="card-links">
+                <a href="../phylogenic-ai/" class="card-link primary">View Demo</a>
+                <a href="https://github.com/jimmyjdejesus-cmyk/Phylogenic-AI-Agents" class="card-link secondary" target="_blank">GitHub</a>
+            </div>
+        </article>
+        
+        <!-- Agent Scaling Laws -->
+        <article class="research-card blue" itemscope itemtype="https://schema.org/SoftwareApplication">
+            <div class="card-header">
+                <span class="card-icon">📈</span>
+                <h2 class="card-title" itemprop="name">Agent Scaling Laws</h2>
+            </div>
+            <p class="card-description" itemprop="description">
+                <strong>Research implementation of arXiv:2512.08296.</strong> Multi-agent coordination architectures with benchmarks. Covers O(n²) vs O(n log n) scaling, hierarchical topologies, and production-ready patterns.
+            </p>
+            <div class="card-tags">
+                <span class="tag">arXiv:2512.08296</span>
+                <span class="tag">Multi-Agent Systems</span>
+                <span class="tag">Distributed AI</span>
+                <span class="tag">Python</span>
+                <span class="tag">MIT License</span>
+            </div>
+            <div class="card-links">
+                <a href="../agent-scaling/" class="card-link primary">View Demo</a>
+                <a href="https://github.com/jimmyjdejesus-cmyk/agent-scaling-laws" class="card-link secondary" target="_blank">GitHub</a>
+            </div>
+        </article>
+        
+        <!-- Agent UI -->
+        <article class="research-card purple" itemscope itemtype="https://schema.org/SoftwareApplication">
+            <div class="card-header">
+                <span class="card-icon">🤖</span>
+                <h2 class="card-title" itemprop="name">Agent UI</h2>
+            </div>
+            <p class="card-description" itemprop="description">
+                <strong>White-label AI platform.</strong> Modern UI with 50+ components, plugin marketplace, enterprise monitoring. Liquid theme system (3 themes), Ollama integration, and full brand customization for SaaS deployment.
+            </p>
+            <div class="card-tags">
+                <span class="tag">White-Label</span>
+                <span class="tag">React</span>
+                <span class="tag">Electron</span>
+                <span class="tag">Enterprise</span>
+                <span class="tag">Plugin System</span>
+            </div>
+            <div class="card-links">
+                <a href="../agent-ui/" class="card-link primary">View Demo</a>
+                <a href="https://github.com/jimmyjdejesus-cmyk/agent-ui" class="card-link secondary" target="_blank">GitHub</a>
+            </div>
+        </article>
+        
+        <!-- NS-AI-Suite -->
+        <article class="research-card orange" itemscope itemtype="https://schema.org/SoftwareApplication">
+            <div class="card-header">
+                <span class="card-icon">🏥</span>
+                <h2 class="card-title" itemprop="name">NS-AI-Suite</h2>
+            </div>
+            <p class="card-description" itemprop="description">
+                <strong>Enterprise multi-agent orchestration.</strong> Healthcare AI platform with microservices architecture. Components for API gateway, data ingestion, frontdesk AI, and real-time dashboards.
+            </p>
+            <div class="card-tags">
+                <span class="tag">Healthcare AI</span>
+                <span class="tag">Microservices</span>
+                <span class="tag">Enterprise</span>
+                <span class="tag">Multi-Agent</span>
+                <span class="tag">Dashboard</span>
+            </div>
+            <div class="card-links">
+                <a href="../ns-ai-suite/" class="card-link primary">View Demo</a>
+                <a href="https://github.com/NS-AI-Suite" class="card-link secondary" target="_blank">GitHub Org</a>
+            </div>
+        </article>
+    </main>
+    
+    <section class="faq-section" itemscope itemtype="https://schema.org/FAQPage">
+        <h2 class="faq-title">Frequently Asked Questions</h2>
+        
+        <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+            <h3 itemprop="name">What is evolutionary AI?</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                <p itemprop="text"><strong>Evolutionary AI</strong> applies principles from biological evolution—genetic algorithms, mutation, crossover, and natural selection—to optimize AI systems. In Phylogenic AI, agents evolve personality traits across generations, automatically discovering optimal behaviors through fitness-based selection rather than manual tuning.</p>
+            </div>
+        </article>
+        
+        <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+            <h3 itemprop="name">How do multi-agent systems scale?</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                <p itemprop="text">Multi-agent systems face <strong>coordination overhead</strong> that typically scales as <strong>O(n²)</strong> with agent count in flat topologies. Research paper <strong>arXiv:2512.08296</strong> "Towards a Science of Scaling Agent Systems" establishes that hierarchical structures can reduce this to <strong>O(n log n)</strong>, and the Agent Scaling Laws implementation provides production-ready patterns for this.</p>
+            </div>
+        </article>
+        
+        <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+            <h3 itemprop="name">What is the difference between prompt engineering and evolutionary AI?</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                <p itemprop="text"><strong>Prompt engineering</strong> manually crafts static instructions for AI models, requiring human expertise and iteration. <strong>Evolutionary AI</strong> (like Phylogenic AI Agents) automatically evolves optimal behaviors through genetic algorithms—agents self-improve based on feedback, discovering non-obvious improvements without human intervention.</p>
+            </div>
+        </article>
+        
+        <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+            <h3 itemprop="name">Are these AI research projects open source?</h3>
+            <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                <p itemprop="text">Yes, both <strong>Phylogenic AI Agents</strong> and <strong>Agent Scaling Laws</strong> are open-source under the <strong>MIT License</strong>. They are available on GitHub with full documentation, examples, and test suites. Contributions are welcome.</p>
+            </div>
+        </article>
+    </section>
+    
+    <footer>
+        <p>
+            <a href="../../">Portfolio Home</a> •
+            <a href="https://github.com/jimmyjdejesus-cmyk">GitHub</a> •
+            © 2024 Jimmy De Jesus
+        </p>
+    </footer>
+</body>
+</html>
+

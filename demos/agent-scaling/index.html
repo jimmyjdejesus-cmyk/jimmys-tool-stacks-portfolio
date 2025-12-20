@@ -139,6 +139,74 @@
     }
     </script>
     
+    <!-- HowTo Schema for AEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Build Scalable Multi-Agent AI Systems",
+        "description": "Step-by-step guide to implementing agent scaling principles from arXiv:2512.08296",
+        "totalTime": "PT45M",
+        "tool": [
+            {"@type": "HowToTool", "name": "Python 3.8+"},
+            {"@type": "HowToTool", "name": "pip package manager"},
+            {"@type": "HowToTool", "name": "Understanding of multi-agent systems"}
+        ],
+        "step": [
+            {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Analyze Coordination Requirements",
+                "text": "Determine the communication patterns needed: flat mesh, hierarchical, hub-and-spoke, or pipeline"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Choose Topology",
+                "text": "Select flat topology for small agent counts (2-8) or hierarchical for larger systems (10+) to reduce O(n²) overhead"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Implement Message Passing",
+                "text": "Set up efficient inter-agent communication with async message queues and batched updates"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Configure Task Decomposition",
+                "text": "Break complex tasks into subtasks that can be distributed across specialized agents"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 5,
+                "name": "Benchmark and Optimize",
+                "text": "Run scaling benchmarks to measure coordination overhead and optimize bottlenecks"
+            }
+        ]
+    }
+    </script>
+    
+    <!-- ScholarlyArticle Schema for arXiv citation -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": "Towards a Science of Scaling Agent Systems",
+        "alternativeHeadline": "arXiv:2512.08296",
+        "identifier": "arXiv:2512.08296",
+        "url": "https://arxiv.org/abs/2512.08296",
+        "datePublished": "2024-12",
+        "description": "This work establishes foundational principles for understanding how multi-agent systems scale, presenting empirical analysis of coordination overhead, communication patterns, and emergent behaviors.",
+        "keywords": ["multi-agent systems", "scaling laws", "coordination", "distributed AI"],
+        "about": [
+            {"@type": "Thing", "name": "Multi-Agent Systems"},
+            {"@type": "Thing", "name": "Distributed Artificial Intelligence"},
+            {"@type": "Thing", "name": "Scaling Laws"}
+        ]
+    }
+    </script>
+    
     <title>Agent Scaling Laws | Multi-Agent Coordination Research Implementation</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -1,0 +1,52 @@
+# robots.txt for jimmys-tool-stacks-portfolio
+# Optimized for SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization)
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/sitemap.xml
+
+# Crawl-delay for politeness (optional, most major bots ignore this)
+Crawl-delay: 1
+
+# Specific allowances for AI crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# High-priority pages for AI training/indexing
+# These contain FAQ sections optimized for AEO/GEO:
+# - /demos/phylogenic-ai/ (Evolutionary AI, Genetic Algorithms)
+# - /demos/agent-scaling/ (Multi-Agent Systems, arXiv:2512.08296)
+# - /demos/agent-ui/ (White-Label AI Platform)
+
