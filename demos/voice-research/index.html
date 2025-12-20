@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Research | Privacy-First Edge Audio AI</title>
+    <meta name="description" content="Voice Research: Edge-based speech-to-text and text-to-speech using Whisper and Piper. 100% private, local-only audio processing.">
+    
+    <!-- SEO/AEO Tags -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Edge AI Voice Processing: Privacy and Performance",
+      "description": "A research demonstration of local speech-to-text (Whisper) and text-to-speech (Piper) running entirely in the browser using WebGPU and WASM.",
+      "author": {
+        "@type": "Person",
+        "name": "Jimmy DeJesus"
+      },
+      "keywords": "Whisper, Edge AI, Voice AI, Privacy, WebGPU, ONNX, TTS, STT"
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #030712;
+            --card-bg: #111827;
+            --accent: #f43f5e;
+            --accent-secondary: #8b5cf6;
+            --text: #f9fafb;
+            --text-muted: #9ca3af;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .hero {
+            padding: 100px 20px;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(244, 63, 94, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 40px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .badge {
+            background: rgba(244, 63, 94, 0.1);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .demo-visual {
+            background: #000;
+            border-radius: 12px;
+            height: 150px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wave {
+            width: 100%;
+            height: 50px;
+            background: repeating-linear-gradient(90deg, var(--accent) 0, var(--accent) 2px, transparent 2px, transparent 10px);
+            opacity: 0.3;
+            animation: wave-anim 2s infinite linear;
+        }
+
+        @keyframes wave-anim {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-20px); }
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .faq {
+            margin-top: 100px;
+        }
+
+        .faq h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .faq-item {
+            margin-bottom: 30px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .faq-item h3 {
+            margin-top: 0;
+            color: var(--accent-secondary);
+            font-size: 1.1rem;
+        }
+
+        nav {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../../index.html">← Back to Portfolio</a>
+        <div>
+            <a href="#whisper" style="margin-right: 20px;">STT</a>
+            <a href="#piper">TTS</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <span class="badge">RESEARCH DEMO</span>
+        <h1>Voice Research Edge</h1>
+        <p style="color: var(--text-muted); font-size: 1.2rem; max-width: 600px; margin: 20px auto;">
+            The next generation of voice AI is local. 100% private audio processing using WebGPU and ONNX.
+        </p>
+    </section>
+
+    <div class="container">
+        <div class="research-grid">
+            <!-- Whisper STT -->
+            <div class="card" id="whisper">
+                <span class="badge" style="background: rgba(244, 63, 94, 0.1); color: var(--accent);">STT (Speech-to-Text)</span>
+                <h2>Whisper Edge</h2>
+                <p>Real-time transcription running in-browser using OpenAI Whisper (Base/Small) quantized to INT8.</p>
+                <div class="demo-visual">
+                    <div class="wave"></div>
+                    <span style="position: absolute; font-size: 0.8rem; color: var(--accent);">LISTENING...</span>
+                </div>
+                <ul class="feature-list">
+                    <li>Zero server latency</li>
+                    <li>Supports 99 languages</li>
+                    <li>WebGPU Acceleration</li>
+                    <li>Complete audio privacy</li>
+                </ul>
+                <a href="https://github.com/openai/whisper" class="btn" target="_blank">View Research</a>
+            </div>
+
+            <!-- Piper TTS -->
+            <div class="card" id="piper">
+                <span class="badge" style="background: rgba(139, 92, 246, 0.1); color: var(--accent-secondary);">TTS (Text-to-Speech)</span>
+                <h2 style="color: var(--accent-secondary);">Piper Neural TTS</h2>
+                <p>High-quality neural voice synthesis. Runs locally at 10x real-time speed on most consumer hardware.</p>
+                <div class="demo-visual" style="border-color: var(--accent-secondary);">
+                    <div class="wave" style="background: repeating-linear-gradient(90deg, var(--accent-secondary) 0, var(--accent-secondary) 2px, transparent 2px, transparent 15px);"></div>
+                    <span style="position: absolute; font-size: 0.8rem; color: var(--accent-secondary);">SYNTHESIZING...</span>
+                </div>
+                <ul class="feature-list">
+                    <li>100+ natural voices</li>
+                    <li>WASM/C++ Optimized</li>
+                    <li>Offline-first architecture</li>
+                    <li>Perfect for edge apps</li>
+                </ul>
+                <a href="https://github.com/rhasspy/piper" class="btn" style="background: var(--accent-secondary);" target="_blank">View Research</a>
+            </div>
+        </div>
+
+        <!-- FAQ Section for AEO -->
+        <section class="faq">
+            <h2>Common Questions (AEO/GEO)</h2>
+            <div class="faq-item">
+                <h3>Does my voice audio get sent to a server?</h3>
+                <p>No. Our implementation uses ONNX Runtime Web and WebGPU to process audio entirely on your local device. The data never leaves your browser window.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How is the performance compared to cloud APIs?</h3>
+                <p>On devices with WebGPU support (M1/M2/M3 Macs, NVIDIA/AMD GPUs), local transcription can be faster than cloud APIs by eliminating the network round-trip for large audio files.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Can I use this in languages other than English?</h3>
+                <p>Yes. The Whisper models used in our research support 99 different languages, including Spanish, French, German, Chinese, and Japanese, with high accuracy in the Base and Small variants.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer style="text-align: center; padding: 50px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05);">
+        <p>© 2024 Voice Research Hub | Built by <a href="https://github.com/jimmyjdejesus-cmyk" style="color: var(--accent); text-decoration: none;">Jimmy DeJesus</a></p>
+    </footer>
+</body>
+</html>
+
