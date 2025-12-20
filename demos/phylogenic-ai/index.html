@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Phylogenic AI Agents: Genetic evolution for AI personalities. Self-optimizing agents with liquid memory, ML analytics, and evolutionary optimization.">
+    <meta name="keywords" content="phylogenic AI, genetic algorithms, evolutionary AI, multi-agent systems, liquid neural networks, machine learning, AI optimization, agent framework">
+    <meta name="author" content="Jimmy De Jesus">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Phylogenic AI Agents | Evolutionary Intelligence">
+    <meta property="og:description" content="🧬 Genetic evolution for AI personalities. Self-optimizing agents with liquid memory, ML analytics, and evolutionary optimization.">
+    <meta property="og:url" content="https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/phylogenic-ai/">
+    
+    <title>Phylogenic AI Agents | Evolutionary Intelligence Demo</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #0f172a;
+            --bg-card: #1e293b;
+            --accent-primary: #10b981;
+            --accent-secondary: #34d399;
+            --accent-tertiary: #6ee7b7;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #334155;
+            --gradient-dna: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+            --gradient-hero: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.05) 100%);
+            --glow: 0 0 40px rgba(16, 185, 129, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* DNA Animation Background */
+        .dna-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .dna-strand {
+            position: absolute;
+            width: 4px;
+            height: 100vh;
+            background: repeating-linear-gradient(
+                0deg,
+                var(--accent-primary) 0px,
+                var(--accent-primary) 20px,
+                transparent 20px,
+                transparent 40px
+            );
+            animation: dnaFloat 20s ease-in-out infinite;
+        }
+        
+        .dna-strand:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .dna-strand:nth-child(2) { left: 25%; animation-delay: -5s; }
+        .dna-strand:nth-child(3) { left: 50%; animation-delay: -10s; }
+        .dna-strand:nth-child(4) { left: 75%; animation-delay: -15s; }
+        .dna-strand:nth-child(5) { left: 90%; animation-delay: -7s; }
+        
+        @keyframes dnaFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+        
+        /* Header */
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(10, 15, 28, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--accent-primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 40px 80px;
+            text-align: center;
+            background: var(--gradient-hero);
+            position: relative;
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: var(--gradient-dna);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+            to { box-shadow: 0 0 25px rgba(16, 185, 129, 0.8); }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-dna);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-primary);
+            border: 2px solid var(--accent-primary);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding: 40px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        /* Features Grid */
+        .features {
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--text-primary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-dna);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--accent-secondary);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        /* Evolution Diagram */
+        .evolution-section {
+            padding: 80px 40px;
+            background: var(--bg-secondary);
+        }
+        
+        .evolution-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .evolution-step {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            width: 200px;
+            transition: all 0.3s;
+        }
+        
+        .evolution-step:hover {
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+        }
+        
+        .evolution-step.active {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+        }
+        
+        .step-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: var(--accent-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .evolution-arrow {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            animation: arrowPulse 1.5s infinite;
+        }
+        
+        @keyframes arrowPulse {
+            0%, 100% { opacity: 0.5; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(5px); }
+        }
+        
+        /* Code Example */
+        .code-section {
+            padding: 80px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .code-block {
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            background: #161b22;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27ca40; }
+        
+        .code-content {
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+        
+        .code-line { display: block; }
+        .code-comment { color: #6a737d; }
+        .code-keyword { color: #ff7b72; }
+        .code-string { color: #a5d6ff; }
+        .code-function { color: #d2a8ff; }
+        .code-class { color: #7ee787; }
+        .code-number { color: #79c0ff; }
+        
+        /* Architecture */
+        .architecture-section {
+            padding: 80px 40px;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+        
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .arch-layer {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .arch-layer.full-width {
+            grid-column: span 3;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+            border-color: var(--accent-primary);
+        }
+        
+        .arch-layer h4 {
+            color: var(--accent-secondary);
+            margin-bottom: 8px;
+        }
+        
+        .arch-layer p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 40px;
+            text-align: center;
+            background: var(--gradient-hero);
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px;
+            text-align: center;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+        }
+        
+        footer a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .stats-bar { gap: 30px; }
+            .arch-grid { grid-template-columns: 1fr; }
+            .arch-layer.full-width { grid-column: span 1; }
+            .evolution-diagram { flex-direction: column; }
+            .evolution-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- DNA Background -->
+    <div class="dna-bg">
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
+        <div class="dna-strand"></div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span class="logo-icon">🧬</span>
+            <span>Phylogenic AI</span>
+        </div>
+        <nav>
+            <a href="#features">Features</a>
+            <a href="#evolution">Evolution</a>
+            <a href="#architecture">Architecture</a>
+            <a href="https://github.com/jimmyjdejesus-cmyk/Phylogenic-AI-Agents" target="_blank">GitHub</a>
+            <a href="../../portfolio/">Portfolio</a>
+        </nav>
+    </header>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <span class="version-badge">🧬 v1.0.0 • Production Release</span>
+        <h1>Phylogenic AI Agents</h1>
+        <p class="subtitle">Genetic evolution for AI personalities. Self-optimizing agents with liquid memory, ML analytics, and evolutionary optimization. Beyond prompt engineering.</p>
+        <div class="cta-buttons">
+            <a href="https://github.com/jimmyjdejesus-cmyk/Phylogenic-AI-Agents" target="_blank" class="btn btn-primary">⭐ Star on GitHub</a>
+            <a href="https://jimmyjdejesus-cmyk.github.io/Phylogenic-AI-Agents/" target="_blank" class="btn btn-secondary">📖 Documentation</a>
+        </div>
+    </section>
+    
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat">
+            <div class="stat-value">55+</div>
+            <div class="stat-label">Commits</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">4</div>
+            <div class="stat-label">Core Phases</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Test Coverage</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">MIT</div>
+            <div class="stat-label">License</div>
+        </div>
+    </div>
+    
+    <!-- Features -->
+    <section class="features" id="features">
+        <h2 class="section-title">Core Capabilities</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧬</div>
+                <h3>Genetic Evolution</h3>
+                <p>Agents evolve through genetic algorithms, inheriting and mutating personality traits across generations for optimal behavior.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Liquid Memory</h3>
+                <p>Dynamic memory systems that adapt in real-time, storing and retrieving context efficiently using liquid neural network principles.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>ML Analytics</h3>
+                <p>Built-in machine learning analytics for tracking agent performance, behavior patterns, and optimization opportunities.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Self-Optimization</h3>
+                <p>Agents autonomously improve their responses and behaviors based on feedback loops and evolutionary pressure.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎭</div>
+                <h3>Personality Engine</h3>
+                <p>Rich personality modeling with traits, preferences, and behavioral modifiers that evolve over time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h3>Multi-Agent Coordination</h3>
+                <p>Seamless coordination between multiple agents with shared genetic pools and collaborative evolution.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Evolution Process -->
+    <section class="evolution-section" id="evolution">
+        <h2 class="section-title">The Evolution Process</h2>
+        <div class="evolution-diagram">
+            <div class="evolution-step">
+                <div class="step-icon">🌱</div>
+                <div class="step-title">Genesis</div>
+                <div class="step-desc">Initialize agent with base traits</div>
+            </div>
+            <span class="evolution-arrow">→</span>
+            <div class="evolution-step">
+                <div class="step-icon">🧪</div>
+                <div class="step-title">Mutation</div>
+                <div class="step-desc">Apply genetic variations</div>
+            </div>
+            <span class="evolution-arrow">→</span>
+            <div class="evolution-step active">
+                <div class="step-icon">⚔️</div>
+                <div class="step-title">Selection</div>
+                <div class="step-desc">Evaluate fitness scores</div>
+            </div>
+            <span class="evolution-arrow">→</span>
+            <div class="evolution-step">
+                <div class="step-icon">🧬</div>
+                <div class="step-title">Inheritance</div>
+                <div class="step-desc">Pass traits to next gen</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Code Example -->
+    <section class="code-section">
+        <h2 class="section-title">Quick Start</h2>
+        <div class="code-block">
+            <div class="code-header">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+                <span style="color: var(--text-muted); margin-left: 10px;">example.py</span>
+            </div>
+            <div class="code-content">
+                <span class="code-line"><span class="code-keyword">from</span> phylogenic <span class="code-keyword">import</span> <span class="code-class">Agent</span>, <span class="code-class">Evolution</span></span>
+                <span class="code-line"></span>
+                <span class="code-line"><span class="code-comment"># Create an agent with genetic traits</span></span>
+                <span class="code-line">agent = <span class="code-class">Agent</span>(</span>
+                <span class="code-line">    name=<span class="code-string">"Darwin"</span>,</span>
+                <span class="code-line">    traits={</span>
+                <span class="code-line">        <span class="code-string">"creativity"</span>: <span class="code-number">0.8</span>,</span>
+                <span class="code-line">        <span class="code-string">"precision"</span>: <span class="code-number">0.9</span>,</span>
+                <span class="code-line">        <span class="code-string">"adaptability"</span>: <span class="code-number">0.7</span></span>
+                <span class="code-line">    }</span>
+                <span class="code-line">)</span>
+                <span class="code-line"></span>
+                <span class="code-line"><span class="code-comment"># Evolve the agent over generations</span></span>
+                <span class="code-line">evolved = <span class="code-class">Evolution</span>.<span class="code-function">run</span>(agent, generations=<span class="code-number">100</span>)</span>
+                <span class="code-line"><span class="code-function">print</span>(evolved.fitness_score)  <span class="code-comment"># 0.95</span></span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Architecture -->
+    <section class="architecture-section" id="architecture">
+        <h2 class="section-title">System Architecture</h2>
+        <div class="arch-grid">
+            <div class="arch-layer full-width">
+                <h4>🎯 Agent Interface Layer</h4>
+                <p>LLM Integration • Prompt Management • Response Generation</p>
+            </div>
+            <div class="arch-layer">
+                <h4>🧬 Genetic Engine</h4>
+                <p>Mutation • Crossover • Selection</p>
+            </div>
+            <div class="arch-layer">
+                <h4>🧠 Memory System</h4>
+                <p>Liquid Memory • Context Store</p>
+            </div>
+            <div class="arch-layer">
+                <h4>📊 Analytics</h4>
+                <p>Metrics • Predictions • ML</p>
+            </div>
+            <div class="arch-layer full-width">
+                <h4>💾 Persistence Layer</h4>
+                <p>Agent State • Evolution History • Trait Genealogy</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to Evolve Your AI?</h2>
+        <p>Join the evolution. Build self-optimizing agents that grow smarter with every interaction.</p>
+        <div class="cta-buttons">
+            <a href="https://github.com/jimmyjdejesus-cmyk/Phylogenic-AI-Agents" target="_blank" class="btn btn-primary">Get Started →</a>
+            <a href="../agent-scaling/" class="btn btn-secondary">See Also: Agent Scaling Laws</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>
+            <a href="https://github.com/jimmyjdejesus-cmyk/Phylogenic-AI-Agents">GitHub</a> •
+            <a href="https://jimmyjdejesus-cmyk.github.io/Phylogenic-AI-Agents/">Docs</a> •
+            <a href="../../portfolio/">Portfolio</a> •
+            <a href="../../index.html">Home</a>
+        </p>
+        <p style="margin-top: 10px; color: var(--text-muted);">© 2024 Jimmy De Jesus • MIT License</p>
+    </footer>
+</body>
+</html>
+

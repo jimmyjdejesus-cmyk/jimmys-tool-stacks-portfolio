@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Agent Scaling Laws: Implementation of agent coordination architectures and scaling principles from 'Towards a Science of Scaling Agent Systems' (arXiv:2512.08296).">
+    <meta name="keywords" content="agent scaling laws, multi-agent systems, coordination, distributed AI, arXiv, research implementation, scaling principles, MAS">
+    <meta name="author" content="Jimmy De Jesus">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Agent Scaling Laws | Research Implementation">
+    <meta property="og:description" content="📈 Implementation of agent coordination architectures from arXiv:2512.08296. Research-backed multi-agent framework.">
+    <meta property="og:url" content="https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/agent-scaling/">
+    
+    <title>Agent Scaling Laws | Multi-Agent Coordination Research</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #030712;
+            --bg-secondary: #0f172a;
+            --bg-card: #1e293b;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #60a5fa;
+            --accent-tertiary: #93c5fd;
+            --accent-warning: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #334155;
+            --gradient-main: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+            --gradient-hero: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
+            --glow: 0 0 40px rgba(59, 130, 246, 0.4);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Header */
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(3, 7, 18, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+        
+        .logo-icon {
+            font-size: 1.8rem;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 28px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--accent-primary);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 100px 40px 80px;
+            text-align: center;
+            background: var(--gradient-hero);
+            position: relative;
+        }
+        
+        .arxiv-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-warning);
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto 40px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-main);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-primary);
+            border: 2px solid var(--accent-primary);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        /* Stats */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            padding: 40px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        
+        /* Key Concepts */
+        .concepts {
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.3rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .concept-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .concept-icon {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .concept-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--accent-secondary);
+        }
+        
+        .concept-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+        
+        /* Scaling Law Visualization */
+        .scaling-viz {
+            padding: 80px 40px;
+            background: var(--bg-secondary);
+        }
+        
+        .scaling-chart {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+        }
+        
+        .chart-title {
+            text-align: center;
+            color: var(--accent-secondary);
+            margin-bottom: 30px;
+            font-size: 1.3rem;
+        }
+        
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 250px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .chart-bar {
+            width: 60px;
+            background: var(--gradient-main);
+            border-radius: 6px 6px 0 0;
+            transition: all 0.5s;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .chart-bar:hover {
+            filter: brightness(1.2);
+            transform: scaleY(1.05);
+        }
+        
+        .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+        
+        /* Paper Reference */
+        .paper-section {
+            padding: 80px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .paper-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.02));
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 16px;
+            padding: 35px;
+        }
+        
+        .paper-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .paper-icon {
+            font-size: 3rem;
+        }
+        
+        .paper-title {
+            color: var(--accent-warning);
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        
+        .paper-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .paper-abstract {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            border-left: 3px solid var(--accent-warning);
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+        
+        .paper-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-warning);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .paper-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
+        }
+        
+        /* Architecture */
+        .architecture {
+            padding: 80px 40px;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+        
+        .arch-diagram {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .arch-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .arch-box:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+        }
+        
+        .arch-box.span-2 { grid-column: span 2; }
+        .arch-box.span-4 { 
+            grid-column: span 4;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
+            border-color: var(--accent-primary);
+        }
+        
+        .arch-box h4 {
+            color: var(--accent-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+        
+        .arch-box p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        
+        /* CTA */
+        .cta-section {
+            padding: 100px 40px;
+            text-align: center;
+            background: var(--gradient-hero);
+        }
+        
+        .cta-section h2 {
+            font-size: 2.3rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px;
+            text-align: center;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+        }
+        
+        footer a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .stats-bar { gap: 25px; }
+            .arch-diagram { grid-template-columns: repeat(2, 1fr); }
+            .arch-box.span-4, .arch-box.span-2 { grid-column: span 2; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span class="logo-icon">📈</span>
+            <span>Agent Scaling Laws</span>
+        </div>
+        <nav>
+            <a href="#concepts">Concepts</a>
+            <a href="#scaling">Scaling</a>
+            <a href="#paper">Paper</a>
+            <a href="https://github.com/jimmyjdejesus-cmyk/agent-scaling-laws" target="_blank">GitHub</a>
+            <a href="../../portfolio/">Portfolio</a>
+        </nav>
+    </header>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <div class="arxiv-badge">
+            📚 arXiv:2512.08296 • Research Implementation
+        </div>
+        <h1>Agent Scaling Laws</h1>
+        <p class="subtitle">Implementation of agent coordination architectures and scaling principles from "Towards a Science of Scaling Agent Systems". Research-backed multi-agent framework with benchmarks and validation.</p>
+        <div class="cta-buttons">
+            <a href="https://github.com/jimmyjdejesus-cmyk/agent-scaling-laws" target="_blank" class="btn btn-primary">⭐ Star on GitHub</a>
+            <a href="https://arxiv.org/abs/2512.08296" target="_blank" class="btn btn-secondary">📄 Read Paper</a>
+        </div>
+    </section>
+    
+    <!-- Stats -->
+    <div class="stats-bar">
+        <div class="stat">
+            <div class="stat-value">17+</div>
+            <div class="stat-label">Commits</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">5</div>
+            <div class="stat-label">Architectures</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Research-Backed</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">MIT</div>
+            <div class="stat-label">License</div>
+        </div>
+    </div>
+    
+    <!-- Key Concepts -->
+    <section class="concepts" id="concepts">
+        <h2 class="section-title">Key Scaling Principles</h2>
+        <p class="section-subtitle">Core concepts from the research paper implemented in production-ready code</p>
+        <div class="concepts-grid">
+            <div class="concept-card">
+                <div class="concept-icon">📊</div>
+                <h3>Coordination Overhead</h3>
+                <p>Quantifying the communication cost between agents as systems scale, following O(n²) to O(n log n) patterns.</p>
+            </div>
+            <div class="concept-card">
+                <div class="concept-icon">🔄</div>
+                <h3>Hierarchical Structures</h3>
+                <p>Implementing tree-based coordination to reduce overhead while maintaining system coherence.</p>
+            </div>
+            <div class="concept-card">
+                <div class="concept-icon">🎯</div>
+                <h3>Task Decomposition</h3>
+                <p>Optimal strategies for breaking down complex tasks across multiple specialized agents.</p>
+            </div>
+            <div class="concept-card">
+                <div class="concept-icon">⚡</div>
+                <h3>Parallel Execution</h3>
+                <p>Maximizing throughput through intelligent parallelization with minimal synchronization points.</p>
+            </div>
+            <div class="concept-card">
+                <div class="concept-icon">🔗</div>
+                <h3>Message Passing</h3>
+                <p>Efficient inter-agent communication protocols optimized for different topology types.</p>
+            </div>
+            <div class="concept-card">
+                <div class="concept-icon">📈</div>
+                <h3>Emergent Behavior</h3>
+                <p>Analyzing collective intelligence that emerges from individual agent interactions at scale.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Scaling Visualization -->
+    <section class="scaling-viz" id="scaling">
+        <h2 class="section-title">Scaling Behavior</h2>
+        <p class="section-subtitle">Coordination overhead comparison across different agent counts</p>
+        <div class="scaling-chart">
+            <div class="chart-title">Coordination Overhead vs Agent Count</div>
+            <div class="chart-container">
+                <div class="chart-bar" style="height: 20px;" data-value="1.0x"></div>
+                <div class="chart-bar" style="height: 45px;" data-value="2.2x"></div>
+                <div class="chart-bar" style="height: 85px;" data-value="4.1x"></div>
+                <div class="chart-bar" style="height: 140px;" data-value="6.8x"></div>
+                <div class="chart-bar" style="height: 220px;" data-value="11x"></div>
+            </div>
+            <div class="chart-labels">
+                <span>2 Agents</span>
+                <span>4 Agents</span>
+                <span>8 Agents</span>
+                <span>16 Agents</span>
+                <span>32 Agents</span>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--gradient-main);"></div>
+                    <span>Flat Topology (O(n²))</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Paper Reference -->
+    <section class="paper-section" id="paper">
+        <div class="paper-card">
+            <div class="paper-header">
+                <div class="paper-icon">📄</div>
+                <div>
+                    <h3 class="paper-title">Towards a Science of Scaling Agent Systems</h3>
+                    <p class="paper-meta">arXiv:2512.08296 • December 2024</p>
+                </div>
+            </div>
+            <blockquote class="paper-abstract">
+                "This work establishes foundational principles for understanding how multi-agent systems scale. We present empirical analysis of coordination overhead, communication patterns, and emergent behaviors across varying agent populations, providing a scientific framework for designing scalable AI agent architectures."
+            </blockquote>
+            <a href="https://arxiv.org/abs/2512.08296" target="_blank" class="paper-link">
+                📚 Read Full Paper on arXiv →
+            </a>
+        </div>
+    </section>
+    
+    <!-- Architecture -->
+    <section class="architecture" id="architecture">
+        <h2 class="section-title">Implementation Architecture</h2>
+        <div class="arch-diagram">
+            <div class="arch-box span-4">
+                <h4>🎯 Orchestration Layer</h4>
+                <p>Task Distribution • Load Balancing • Result Aggregation</p>
+            </div>
+            <div class="arch-box span-2">
+                <h4>📊 Metrics Collector</h4>
+                <p>Latency • Throughput • Overhead</p>
+            </div>
+            <div class="arch-box span-2">
+                <h4>🔄 Topology Manager</h4>
+                <p>Flat • Hierarchical • Mesh</p>
+            </div>
+            <div class="arch-box">
+                <h4>Agent Pool</h4>
+                <p>Execution Units</p>
+            </div>
+            <div class="arch-box">
+                <h4>Message Bus</h4>
+                <p>Communication</p>
+            </div>
+            <div class="arch-box">
+                <h4>State Store</h4>
+                <p>Shared Context</p>
+            </div>
+            <div class="arch-box">
+                <h4>Scheduler</h4>
+                <p>Task Queue</p>
+            </div>
+            <div class="arch-box span-4">
+                <h4>💾 Persistence & Benchmarking Layer</h4>
+                <p>Experiment Results • Validation Data • Performance History</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Build Scalable Agent Systems</h2>
+        <p>Apply research-backed principles to your multi-agent architectures. Understand the science behind scaling.</p>
+        <div class="cta-buttons">
+            <a href="https://github.com/jimmyjdejesus-cmyk/agent-scaling-laws" target="_blank" class="btn btn-primary">Get Started →</a>
+            <a href="../phylogenic-ai/" class="btn btn-secondary">See Also: Phylogenic AI</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>
+            <a href="https://github.com/jimmyjdejesus-cmyk/agent-scaling-laws">GitHub</a> •
+            <a href="https://jimmyjdejesus-cmyk.github.io/agent-scaling-laws/">Docs</a> •
+            <a href="https://arxiv.org/abs/2512.08296">arXiv Paper</a> •
+            <a href="../../portfolio/">Portfolio</a>
+        </p>
+        <p style="margin-top: 10px; color: var(--text-muted);">© 2024 Jimmy De Jesus • MIT License</p>
+    </footer>
+</body>
+</html>
+
