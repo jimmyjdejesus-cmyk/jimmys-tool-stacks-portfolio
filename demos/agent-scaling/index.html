@@ -3,18 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Agent Scaling Laws: Implementation of agent coordination architectures and scaling principles from 'Towards a Science of Scaling Agent Systems' (arXiv:2512.08296).">
-    <meta name="keywords" content="agent scaling laws, multi-agent systems, coordination, distributed AI, arXiv, research implementation, scaling principles, MAS">
+    <meta name="description" content="Agent Scaling Laws is an open-source implementation of multi-agent coordination architectures based on the research paper 'Towards a Science of Scaling Agent Systems' (arXiv:2512.08296). Features benchmarks, validation, and production-ready scaling patterns for distributed AI agents.">
+    <meta name="keywords" content="agent scaling laws, multi-agent systems, coordination overhead, distributed AI, arXiv 2512.08296, research implementation, scaling principles, MAS, hierarchical agents, agent orchestration, AI coordination">
     <meta name="author" content="Jimmy De Jesus">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    
+    <!-- AEO/GEO Optimization - Citations -->
+    <meta name="citation_title" content="Agent Scaling Laws: Implementation of Multi-Agent Coordination Architectures">
+    <meta name="citation_author" content="Jimmy De Jesus">
+    <meta name="citation_publication_date" content="2024">
+    <meta name="citation_arxiv_id" content="2512.08296">
+    <link rel="canonical" href="https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/agent-scaling/">
     
     <!-- Open Graph / Social -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Agent Scaling Laws | Research Implementation">
-    <meta property="og:description" content="📈 Implementation of agent coordination architectures from arXiv:2512.08296. Research-backed multi-agent framework.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Agent Scaling Laws | Research-Backed Multi-Agent Framework">
+    <meta property="og:description" content="Open-source implementation of agent coordination architectures from arXiv:2512.08296. Benchmarks, validation, and production-ready scaling patterns.">
     <meta property="og:url" content="https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/agent-scaling/">
+    <meta property="og:site_name" content="Jimmy De Jesus Portfolio">
+    <meta property="article:author" content="Jimmy De Jesus">
+    <meta property="article:published_time" content="2024-12-01">
     
-    <title>Agent Scaling Laws | Multi-Agent Coordination Research</title>
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Agent Scaling Laws | Multi-Agent Coordination Research">
+    <meta name="twitter:description" content="Research-backed implementation of agent scaling principles from arXiv:2512.08296.">
+    
+    <!-- JSON-LD Structured Data for AEO/GEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Agent Scaling Laws",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Cross-platform",
+        "description": "An open-source Python implementation of multi-agent coordination architectures and scaling principles based on the research paper 'Towards a Science of Scaling Agent Systems' (arXiv:2512.08296). Provides benchmarks, validation, and production-ready patterns for scaling distributed AI agent systems.",
+        "url": "https://github.com/jimmyjdejesus-cmyk/agent-scaling-laws",
+        "downloadUrl": "https://github.com/jimmyjdejesus-cmyk/agent-scaling-laws",
+        "softwareVersion": "1.0.0",
+        "author": {
+            "@type": "Person",
+            "name": "Jimmy De Jesus",
+            "url": "https://github.com/jimmyjdejesus-cmyk"
+        },
+        "programmingLanguage": "Python",
+        "license": "https://opensource.org/licenses/MIT",
+        "citation": {
+            "@type": "ScholarlyArticle",
+            "name": "Towards a Science of Scaling Agent Systems",
+            "identifier": "arXiv:2512.08296"
+        },
+        "featureList": [
+            "Coordination overhead analysis",
+            "Hierarchical agent structures",
+            "Task decomposition strategies",
+            "Parallel execution optimization",
+            "Message passing protocols",
+            "Emergent behavior analysis",
+            "Benchmarking suite"
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What are agent scaling laws?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Agent scaling laws describe how multi-agent AI systems behave as the number of agents increases. Key factors include coordination overhead (typically O(n²) in flat topologies), communication latency, task decomposition efficiency, and emergent collective behaviors. Understanding these laws enables designing systems that scale efficiently."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the arXiv paper 2512.08296 about?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "'Towards a Science of Scaling Agent Systems' (arXiv:2512.08296) establishes foundational principles for understanding how multi-agent systems scale. It presents empirical analysis of coordination overhead, communication patterns, and emergent behaviors across varying agent populations, providing a scientific framework for designing scalable AI architectures."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does coordination overhead scale with agent count?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "In flat (fully-connected) topologies, coordination overhead scales as O(n²) where n is the number of agents. Hierarchical structures can reduce this to O(n log n) by organizing agents into tree-based groups with designated coordinators, reducing direct inter-agent communication."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What agent topologies are implemented?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The framework implements five main topologies: (1) Flat/Mesh - all agents communicate directly, (2) Hierarchical - tree-based with coordinators, (3) Hub-and-spoke - central orchestrator, (4) Pipeline - sequential processing chains, and (5) Hybrid - combining multiple patterns for different task types."
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Agent Scaling Laws: Multi-Agent Coordination Research Implementation",
+        "description": "Production implementation of agent coordination architectures and scaling principles from arXiv:2512.08296",
+        "author": {
+            "@type": "Person",
+            "name": "Jimmy De Jesus"
+        },
+        "datePublished": "2024-12-01",
+        "keywords": "agent scaling, multi-agent systems, coordination, distributed AI, MAS",
+        "citation": {
+            "@type": "ScholarlyArticle",
+            "name": "Towards a Science of Scaling Agent Systems",
+            "identifier": "arXiv:2512.08296",
+            "url": "https://arxiv.org/abs/2512.08296"
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Portfolio", "item": "https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/"},
+            {"@type": "ListItem", "position": 2, "name": "Demos", "item": "https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/"},
+            {"@type": "ListItem", "position": 3, "name": "Agent Scaling Laws", "item": "https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/agent-scaling/"}
+        ]
+    }
+    </script>
+    
+    <title>Agent Scaling Laws | Multi-Agent Coordination Research Implementation</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -506,6 +631,51 @@
             text-decoration: underline;
         }
         
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .faq-item h3 {
+            color: var(--accent-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+        
+        .faq-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .faq-item strong {
+            color: var(--accent-tertiary);
+        }
+        
+        .faq-item em {
+            color: var(--text-primary);
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
@@ -688,6 +858,43 @@
                 <h4>💾 Persistence & Benchmarking Layer</h4>
                 <p>Experiment Results • Validation Data • Performance History</p>
             </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section for AEO/GEO -->
+    <section class="faq-section" id="faq" itemscope itemtype="https://schema.org/FAQPage">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <h3 itemprop="name">What are agent scaling laws?</h3>
+                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text"><strong>Agent scaling laws</strong> describe how multi-agent AI systems behave as the number of agents increases. Key factors include coordination overhead (typically <strong>O(n²)</strong> in flat topologies), communication latency, task decomposition efficiency, and emergent collective behaviors. Understanding these laws enables designing systems that scale efficiently from 2 to 1000+ agents.</p>
+                </div>
+            </article>
+            <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <h3 itemprop="name">What is the arXiv paper 2512.08296 about?</h3>
+                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text"><strong>"Towards a Science of Scaling Agent Systems"</strong> (arXiv:2512.08296) establishes foundational principles for understanding multi-agent system scaling. It presents empirical analysis of coordination overhead, communication patterns, and emergent behaviors, providing a scientific framework for designing scalable AI architectures backed by rigorous experimentation.</p>
+                </div>
+            </article>
+            <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <h3 itemprop="name">How does coordination overhead scale with agent count?</h3>
+                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text">In <strong>flat (fully-connected) topologies</strong>, coordination overhead scales as <strong>O(n²)</strong> where n is the number of agents—doubling agents quadruples communication. <strong>Hierarchical structures</strong> reduce this to <strong>O(n log n)</strong> by organizing agents into tree-based groups with designated coordinators.</p>
+                </div>
+            </article>
+            <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <h3 itemprop="name">What agent topologies are implemented in this framework?</h3>
+                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text">The framework implements <strong>five main topologies</strong>: (1) <em>Flat/Mesh</em> - all agents communicate directly, (2) <em>Hierarchical</em> - tree-based with coordinators, (3) <em>Hub-and-spoke</em> - central orchestrator, (4) <em>Pipeline</em> - sequential processing chains, and (5) <em>Hybrid</em> - combining patterns for different task types.</p>
+                </div>
+            </article>
+            <article class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                <h3 itemprop="name">When should I use hierarchical vs flat agent topologies?</h3>
+                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                    <p itemprop="text">Use <strong>flat topologies</strong> for small agent counts (2-8) where coordination overhead is acceptable and maximum flexibility is needed. Switch to <strong>hierarchical topologies</strong> for larger systems (10+) to reduce O(n²) communication to O(n log n), accepting some latency for coordinator routing in exchange for scalability.</p>
+                </div>
+            </article>
         </div>
     </section>
     
