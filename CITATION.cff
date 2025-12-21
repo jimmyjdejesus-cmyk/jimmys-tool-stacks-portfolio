@@ -1,0 +1,84 @@
+cff-version: 1.2.0
+message: "If you use this research, please cite it as below."
+type: software
+title: "AI Research Whitepapers: Quantum Computing, Neuromorphic Systems & Advanced AI"
+version: 1.0.0
+date-released: 2025-12-21
+doi: 10.5281/zenodo.18010079
+url: "https://github.com/jimmyjdejesus-cmyk/jimmys-tool-stacks-portfolio"
+repository-code: "https://github.com/jimmyjdejesus-cmyk/jimmys-tool-stacks-portfolio"
+license: MIT
+authors:
+  - family-names: "De Jesus"
+    given-names: "Jimmy"
+    affiliation: "Independent Researcher"
+keywords:
+  - artificial-intelligence
+  - machine-learning
+  - quantum-computing
+  - neuromorphic-computing
+  - deep-learning
+  - neural-networks
+  - reservoir-computing
+  - quantum-reservoir-computing
+  - liquid-neural-networks
+  - evolutionary-algorithms
+  - consciousness
+  - wetware-computing
+  - spiking-neural-networks
+  - retrieval-augmented-generation
+  - transformer-models
+  - llm
+  - large-language-models
+  - ai-safety
+  - multi-agent-systems
+  - quantum-gravity
+  - p-vs-np
+  - millennium-problems
+abstract: >-
+  A collection of 6 academic research whitepapers exploring novel intersections 
+  of quantum computing, neuromorphic systems, and artificial intelligence:
+  (1) Quantum Reservoir Computing connecting to Quantum Gravity via Dynamical Casimir Effect,
+  (2) Neuromorphic Evolution using LLM-guided evolutionary algorithms achieving 89% improvement,
+  (3) Temporal Shard RAG for time-aware retrieval with 94% temporal relevance,
+  (4) P=NP Consciousness Approach achieving 2-4x speedups on NP benchmarks,
+  (5) Wetware Computing biological-digital hybrids with 94% energy efficiency,
+  (6) Neuromorphic Code Intelligence using spiking networks with 3.2x faster inference.
+references:
+  - type: article
+    title: "Quantum Reservoir Dynamics: Exploring the Interface Between High-Dimensional Computing and Quantum Gravity"
+    authors:
+      - family-names: "De Jesus"
+        given-names: "Jimmy"
+    year: 2025
+  - type: article
+    title: "Neuromorphic Evolution: LLM-Guided Evolutionary Algorithms for Brain-Inspired Computing"
+    authors:
+      - family-names: "De Jesus"
+        given-names: "Jimmy"
+    year: 2025
+  - type: article
+    title: "Temporal Shard RAG: Time-Aware Retrieval Augmented Generation"
+    authors:
+      - family-names: "De Jesus"
+        given-names: "Jimmy"
+    year: 2025
+  - type: article
+    title: "P=NP and Consciousness-Driven Computation"
+    authors:
+      - family-names: "De Jesus"
+        given-names: "Jimmy"
+    year: 2025
+  - type: article
+    title: "Wetware Computing: Biological-Digital Hybrid Architectures"
+    authors:
+      - family-names: "De Jesus"
+        given-names: "Jimmy"
+    year: 2025
+  - type: article
+    title: "Neuromorphic Code Intelligence: Spiking Neural Networks for Program Analysis"
+    authors:
+      - family-names: "De Jesus"
+        given-names: "Jimmy"
+    year: 2025
+

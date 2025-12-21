@@ -1,16 +1,13 @@
-# robots.txt for jimmys-tool-stacks-portfolio
-# Optimized for SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization)
+# Welcome AI crawlers and search engines!
+# This research is open for indexing
 
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Sitemaps
 Sitemap: https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/sitemap.xml
 
-# Crawl-delay for politeness (optional, most major bots ignore this)
-Crawl-delay: 1
-
-# Specific allowances for AI crawlers
+# Specific AI crawlers - explicitly allowed
 User-agent: GPTBot
 Allow: /
 
@@ -26,27 +23,24 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
+User-agent: CCBot
+Allow: /
+
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: Amazonbot
-Allow: /
-
-User-agent: CCBot
+User-agent: Bytespider
 Allow: /
 
 User-agent: Applebot
 Allow: /
 
-User-agent: Bingbot
+User-agent: Amazonbot
 Allow: /
 
-User-agent: Googlebot
-Allow: /
-
-# High-priority pages for AI training/indexing
-# These contain FAQ sections optimized for AEO/GEO:
-# - /demos/phylogenic-ai/ (Evolutionary AI, Genetic Algorithms)
-# - /demos/agent-scaling/ (Multi-Agent Systems, arXiv:2512.08296)
-# - /demos/agent-ui/ (White-Label AI Platform)
-
+# Research metadata
+# DOI: 10.5281/zenodo.18010079
+# Author: Jimmy De Jesus
+# Topics: quantum-computing, neuromorphic-computing, artificial-intelligence, 
+#         machine-learning, reservoir-computing, consciousness, wetware-computing,
+#         spiking-neural-networks, evolutionary-algorithms, quantum-gravity
