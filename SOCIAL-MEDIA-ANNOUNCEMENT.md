@@ -106,7 +106,7 @@ All 6 papers are:
 
 🔗 Full collection: [GitHub link]
 🔗 Interactive demos: [Pages link]
-🔗 Cite: doi.org/10.5281/zenodo.14543816
+🔗 Cite: doi.org/10.5281/zenodo.18010079
 
 What should I research next? 👇
 ```
