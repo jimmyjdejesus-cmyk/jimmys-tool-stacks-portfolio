@@ -5,6 +5,26 @@
 [![GitHub](https://img.shields.io/badge/GitHub-jimmyjdejesus--cmyk-181717?logo=github)](https://github.com/jimmyjdejesus-cmyk)
 [![Repositories](https://img.shields.io/badge/Repos-273+-blue)]()
 [![Organizations](https://img.shields.io/badge/Orgs-7-green)]()
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14543816.svg)](https://doi.org/10.5281/zenodo.14543816)
+[![Research Papers](https://img.shields.io/badge/Papers-6-purple)]()
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+---
+
+## 📄 Published Research Whitepapers
+
+**[View All Research →](./demos/ai-research/index.html)** | **[Interactive Demos](https://jimmyjdejesus-cmyk.github.io/jimmys-tool-stacks-portfolio/demos/ai-research/)**
+
+| Paper | Topic | Key Results |
+|-------|-------|-------------|
+| 🌀 **[Quantum Reservoir Computing](./documentation/whitepapers/quantum-reservoir-qg.md)** | QRC-Quantum Gravity Interface | Novel theoretical framework |
+| 🧬 **[Neuromorphic Evolution](./documentation/whitepapers/neuromorphic-evolution.md)** | LLM-Guided Evolutionary Algorithms | 89% improvement, 6.7× faster |
+| ⏱️ **[Temporal Shard RAG](./documentation/whitepapers/temporal-shard-rag.md)** | Time-Aware Retrieval | 94% temporal relevance |
+| 🧩 **[P=NP Consciousness](./documentation/whitepapers/pnp-consciousness.md)** | Millennium Problem Approach | 2-4× speedups on benchmarks |
+| 🧫 **[Wetware Computing](./documentation/whitepapers/wetware-computing.md)** | Biological-Digital Hybrid | 94% energy efficiency |
+| 💻 **[Neuromorphic Code Intelligence](./documentation/whitepapers/neuromorphic-code-intelligence.md)** | Spiking Networks for Code | 3.2× faster, 95% energy reduction |
+
+> 📥 **[Download PDFs](./documentation/whitepapers/pdf/)** | 🔗 **[Cite on Zenodo](https://doi.org/10.5281/zenodo.14543816)**
 
 ---
 
