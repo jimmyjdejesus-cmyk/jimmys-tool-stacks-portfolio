@@ -5,7 +5,7 @@
 [![GitHub](https://img.shields.io/badge/GitHub-jimmyjdejesus--cmyk-181717?logo=github)](https://github.com/jimmyjdejesus-cmyk)
 [![Repositories](https://img.shields.io/badge/Repos-273+-blue)]()
 [![Organizations](https://img.shields.io/badge/Orgs-7-green)]()
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18010079.svg)](https://doi.org/10.5281/zenodo.18010079)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18010078.svg)](https://doi.org/10.5281/zenodo.18010078)
 [![Research Papers](https://img.shields.io/badge/Papers-6-purple)]()
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -24,7 +24,7 @@
 | 🧫 **[Wetware Computing](./documentation/whitepapers/wetware-computing.md)** | Biological-Digital Hybrid | 94% energy efficiency |
 | 💻 **[Neuromorphic Code Intelligence](./documentation/whitepapers/neuromorphic-code-intelligence.md)** | Spiking Networks for Code | 3.2× faster, 95% energy reduction |
 
-> 📥 **[Download PDFs](./documentation/whitepapers/pdf/)** | 🔗 **[Cite on Zenodo](https://doi.org/10.5281/zenodo.18010079)**
+> 📥 **[Download PDFs](./documentation/whitepapers/pdf/)** | 🔗 **[Cite on Zenodo](https://doi.org/10.5281/zenodo.18010078)**
 
 ---
 

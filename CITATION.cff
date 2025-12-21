@@ -4,14 +4,14 @@ type: software
 title: "AI Research Whitepapers: Quantum Computing, Neuromorphic Systems & Advanced AI"
 version: 1.0.0
 date-released: 2025-12-21
-doi: 10.5281/zenodo.18010079
+doi: 10.5281/zenodo.18010078
 url: "https://github.com/jimmyjdejesus-cmyk/jimmys-tool-stacks-portfolio"
 repository-code: "https://github.com/jimmyjdejesus-cmyk/jimmys-tool-stacks-portfolio"
 license: MIT
 authors:
   - family-names: "De Jesus"
     given-names: "Jimmy"
-    affiliation: "Independent Researcher"
+    affiliation: "Bravetto"
 keywords:
   - artificial-intelligence
   - machine-learning
