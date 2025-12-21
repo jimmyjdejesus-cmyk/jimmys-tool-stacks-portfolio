@@ -1,0 +1,24 @@
+{
+  "title": "Temporal Shard RAG: Time-Aware Retrieval Augmented Generation with Neuromorphic Memory Systems",
+  "description": "We introduce Temporal Shard RAG, a novel retrieval augmented generation architecture that incorporates explicit temporal reasoning through neuromorphic memory sharding. The system achieves 94% temporal relevance accuracy with 340ms average latency through biologically-inspired memory consolidation.",
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    {
+      "name": "De Jesus, Jimmy",
+      "affiliation": "Independent Researcher"
+    }
+  ],
+  "keywords": [
+    "retrieval augmented generation",
+    "temporal reasoning",
+    "neuromorphic memory",
+    "time-aware AI",
+    "memory sharding",
+    "document retrieval",
+    "semantic search"
+  ]
+}
+

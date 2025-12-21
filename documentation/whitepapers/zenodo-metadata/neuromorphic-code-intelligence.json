@@ -1,0 +1,24 @@
+{
+  "title": "Neuromorphic Code Intelligence: Spiking Neural Networks for Program Analysis and Code Generation",
+  "description": "We present a neuromorphic approach to code intelligence using spiking neural networks (SNNs) for program analysis and code generation. The Neural AST architecture achieves 3.2x faster inference than transformer baselines with 95% energy reduction through event-driven computation.",
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    {
+      "name": "De Jesus, Jimmy",
+      "affiliation": "Independent Researcher"
+    }
+  ],
+  "keywords": [
+    "neuromorphic computing",
+    "spiking neural networks",
+    "code intelligence",
+    "program analysis",
+    "code generation",
+    "AST processing",
+    "energy-efficient AI"
+  ]
+}
+

@@ -1,7 +1,7 @@
 # 🎯 GitHub Portfolio Documentation - Master Index
 
-**Last Updated**: December 17, 2025  
-**Total Files**: 41 markdown documents  
+**Last Updated**: December 19, 2025  
+**Total Files**: 46 markdown documents  
 **Covering**: 273+ repositories across 2 accounts and 7 organizations
 
 ---
@@ -61,6 +61,13 @@ documentation/
 │   ├── INVESTOR-PITCH-OUTLINE.md         # Pitch template
 │   └── RESEARCH-GRANTS-GUIDE.md          # Grant matching
 │
+├── Marketplace & Monetization
+│   ├── MARKETPLACE-STRATEGY.md            # Complete marketplace guide
+│   ├── MARKETPLACE-PRODUCT-PACKAGING.md   # Packaging requirements
+│   ├── MARKETPLACE-LISTING-TEMPLATES.md   # Copy-paste listings
+│   ├── MARKETPLACE-TECHNICAL-REQUIREMENTS.md # Technical checklist
+│   └── MARKETPLACE-QUICK-START.md         # Week 1 action plan
+│
 └── grant-applications/
     ├── TEAM-HANDOFF-INSTRUCTIONS.md      # For submission team
     ├── nsf-sbir/
@@ -95,6 +102,13 @@ documentation/
 2. `RESEARCH-GRANTS-GUIDE.md` (30 min)
 3. `grant-applications/TEAM-HANDOFF-INSTRUCTIONS.md` (10 min)
 4. Individual grant applications as needed
+
+### 🛒 Monetizing Products
+1. `MARKETPLACE-QUICK-START.md` (15 min) - Start here!
+2. `MARKETPLACE-STRATEGY.md` (1 hr) - Complete strategy
+3. `MARKETPLACE-LISTING-TEMPLATES.md` (30 min) - Copy-paste listings
+4. `MARKETPLACE-PRODUCT-PACKAGING.md` (30 min) - Packaging guide
+5. `MARKETPLACE-TECHNICAL-REQUIREMENTS.md` (30 min) - Technical checklist
 
 ### 🔧 Technical Implementation
 1. `MODULE-MAPPING-DETAILED.md` (2 hrs)

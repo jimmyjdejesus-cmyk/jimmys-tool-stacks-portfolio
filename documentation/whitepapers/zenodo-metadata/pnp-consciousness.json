@@ -1,0 +1,24 @@
+{
+  "title": "P=NP and Consciousness-Driven Computation: A Novel Framework for Millennium Problem Exploration",
+  "description": "We propose a theoretical framework exploring the P=NP problem through the lens of consciousness-driven computation. Using parallel awareness models and probabilistic reasoning, we achieve 2-4x speedups on NP benchmark problems, suggesting consciousness-like computation may offer insights into computational complexity.",
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    {
+      "name": "De Jesus, Jimmy",
+      "affiliation": "Independent Researcher"
+    }
+  ],
+  "keywords": [
+    "P vs NP",
+    "millennium problems",
+    "consciousness",
+    "computational complexity",
+    "parallel awareness",
+    "optimization",
+    "NP-complete problems"
+  ]
+}
+

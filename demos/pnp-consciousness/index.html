@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P vs NP & Consciousness | Computational Complexity Framework</title>
+    <meta name="description" content="Theoretical framework exploring consciousness-driven computation for NP-hard problems.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --bg-void: #050508;
+            --bg-deep: #0a0a10;
+            --bg-surface: #12121a;
+            --bg-elevated: #1a1a25;
+            --accent-consciousness: #9d4edd;
+            --accent-computation: #00d4ff;
+            --accent-insight: #ffd60a;
+            --accent-swarm: #ff6b6b;
+            --text-bright: #ffffff;
+            --text-dim: #a0a0b8;
+            --text-muted: #606080;
+            --font-serif: 'Instrument Serif', serif;
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-void);
+            color: var(--text-bright);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            text-align: center;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(157, 78, 221, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 70% 80%, rgba(0, 212, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(255, 214, 10, 0.1) 0%, transparent 50%);
+            animation: pulse-bg 8s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse-bg {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        #consciousnessCanvas {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+        
+        .millennium-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(157, 78, 221, 0.2);
+            border: 1px solid rgba(157, 78, 221, 0.4);
+            padding: 0.6rem 1.25rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+        }
+        
+        .millennium-badge .icon {
+            font-size: 1.25rem;
+        }
+        
+        .millennium-badge span {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--accent-consciousness);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        
+        .hero h1 .symbol {
+            font-family: var(--font-mono);
+            color: var(--accent-computation);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-dim);
+            font-family: var(--font-serif);
+            font-style: italic;
+            margin-bottom: 2.5rem;
+        }
+        
+        .hero-equation {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        
+        .framework-preview {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .preview-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .preview-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .preview-item:nth-child(1) .preview-icon { background: rgba(157, 78, 221, 0.3); }
+        .preview-item:nth-child(2) .preview-icon { background: rgba(0, 212, 255, 0.3); }
+        .preview-item:nth-child(3) .preview-icon { background: rgba(255, 214, 10, 0.3); }
+        .preview-item:nth-child(4) .preview-icon { background: rgba(255, 107, 107, 0.3); }
+        .preview-item:nth-child(5) .preview-icon { background: rgba(100, 255, 150, 0.3); }
+        
+        .preview-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-num {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent-consciousness);
+            margin-bottom: 0.5rem;
+        }
+        
+        .section h2 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+        
+        .section-desc {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* CDC Framework */
+        .cdc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .cdc-card {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cdc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-consciousness), var(--accent-computation));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .cdc-card:hover::before {
+            opacity: 1;
+        }
+        
+        .cdc-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .cdc-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cdc-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .cdc-card:nth-child(1) .cdc-icon { background: linear-gradient(135deg, rgba(157, 78, 221, 0.4), rgba(157, 78, 221, 0.2)); }
+        .cdc-card:nth-child(2) .cdc-icon { background: linear-gradient(135deg, rgba(0, 212, 255, 0.4), rgba(0, 212, 255, 0.2)); }
+        .cdc-card:nth-child(3) .cdc-icon { background: linear-gradient(135deg, rgba(255, 107, 107, 0.4), rgba(255, 107, 107, 0.2)); }
+        .cdc-card:nth-child(4) .cdc-icon { background: linear-gradient(135deg, rgba(255, 214, 10, 0.4), rgba(255, 214, 10, 0.2)); }
+        .cdc-card:nth-child(5) .cdc-icon { background: linear-gradient(135deg, rgba(100, 255, 150, 0.4), rgba(100, 255, 150, 0.2)); }
+        
+        .cdc-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .cdc-content p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cdc-equation {
+            background: var(--bg-deep);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-computation);
+        }
+        
+        /* Visualization */
+        .viz-section {
+            background: var(--bg-deep);
+            padding: 4rem 2rem;
+        }
+        
+        .viz-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-surface);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+        
+        .viz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .viz-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .viz-controls {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .viz-btn {
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-dim);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .viz-btn:hover, .viz-btn.active {
+            background: var(--accent-consciousness);
+            color: white;
+            border-color: var(--accent-consciousness);
+        }
+        
+        #problemCanvas {
+            width: 100%;
+            height: 350px;
+            background: var(--bg-deep);
+            border-radius: 12px;
+        }
+        
+        .viz-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        /* Results Table */
+        .results-card {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+        
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .results-table th,
+        .results-table td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+        }
+        
+        .results-table th {
+            background: var(--bg-elevated);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+        }
+        
+        .results-table td {
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .results-table tr:hover td {
+            background: rgba(157, 78, 221, 0.05);
+        }
+        
+        .improvement {
+            color: var(--accent-insight);
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+        
+        .problem-tag {
+            background: var(--bg-elevated);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+        }
+        
+        /* Philosophy */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .philosophy-card {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        
+        .philosophy-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .philosophy-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+        
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(180deg, var(--bg-void) 0%, var(--bg-deep) 100%);
+        }
+        
+        .cta-section h2 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            color: var(--text-dim);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-consciousness), var(--accent-computation));
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text-bright);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
+        }
+        
+        /* Disclaimer */
+        .disclaimer {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255, 214, 10, 0.1);
+            border: 1px solid rgba(255, 214, 10, 0.3);
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .disclaimer h4 {
+            color: var(--accent-insight);
+            margin-bottom: 0.5rem;
+        }
+        
+        .disclaimer p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        footer a {
+            color: var(--accent-consciousness);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <canvas id="consciousnessCanvas"></canvas>
+        <div class="hero-content">
+            <div class="millennium-badge">
+                <span class="icon">🏆</span>
+                <span>Millennium Prize Problem</span>
+            </div>
+            
+            <h1><span class="symbol">P</span> vs <span class="symbol">NP</span></h1>
+            <p class="hero-subtitle">A Computational Framework Through Consciousness</p>
+            
+            <div class="hero-equation">
+                \[P \stackrel{?}{=} NP\]
+            </div>
+            
+            <div class="framework-preview">
+                <div class="preview-item">
+                    <div class="preview-icon">🧠</div>
+                    <span class="preview-label">Parallel Awareness</span>
+                </div>
+                <div class="preview-item">
+                    <div class="preview-icon">🧬</div>
+                    <span class="preview-label">Adaptive Evolution</span>
+                </div>
+                <div class="preview-item">
+                    <div class="preview-icon">💡</div>
+                    <span class="preview-label">Probabilistic Reasoning</span>
+                </div>
+                <div class="preview-item">
+                    <div class="preview-icon">🐝</div>
+                    <span class="preview-label">Swarm Intelligence</span>
+                </div>
+                <div class="preview-item">
+                    <div class="preview-icon">📚</div>
+                    <span class="preview-label">Experiential Learning</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CDC Framework -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">01</div>
+            <h2>Consciousness-Driven Computation</h2>
+            <p class="section-desc">
+                Five interconnected mechanisms that may provide qualitative advantages for NP-hard problems
+            </p>
+        </div>
+        
+        <div class="cdc-grid">
+            <div class="cdc-card">
+                <div class="cdc-header">
+                    <div class="cdc-icon">🧠</div>
+                    <span class="cdc-title">Parallel Awareness</span>
+                </div>
+                <div class="cdc-content">
+                    <p>O(log n) parallel branching enables simultaneous evaluation across solution space partitions.</p>
+                    <div class="cdc-equation">A(S) = ⊕ᵢ Evaluate(Sᵢ)</div>
+                </div>
+            </div>
+            
+            <div class="cdc-card">
+                <div class="cdc-header">
+                    <div class="cdc-icon">🧬</div>
+                    <span class="cdc-title">Adaptive Algorithm Evolution</span>
+                </div>
+                <div class="cdc-content">
+                    <p>Algorithms evolve during problem-solving, modifying approach based on observed performance.</p>
+                    <div class="cdc-equation">Aₜ₊₁ = Mutate(Aₜ, ∇L(Aₜ, P))</div>
+                </div>
+            </div>
+            
+            <div class="cdc-card">
+                <div class="cdc-header">
+                    <div class="cdc-icon">🐝</div>
+                    <span class="cdc-title">Swarm Intelligence</span>
+                </div>
+                <div class="cdc-content">
+                    <p>Multiple conscious agents coordinate, sharing insights and exploring solution space collectively.</p>
+                    <div class="cdc-equation">xᵢᵗ⁺¹ = xᵢᵗ + φ₁(pᵢ - xᵢᵗ) + φ₂(g - xᵢᵗ)</div>
+                </div>
+            </div>
+            
+            <div class="cdc-card">
+                <div class="cdc-header">
+                    <div class="cdc-icon">💡</div>
+                    <span class="cdc-title">Probabilistic Reasoning</span>
+                </div>
+                <div class="cdc-content">
+                    <p>Uncertainty is explicitly modeled, updating beliefs as exploration progresses.</p>
+                    <div class="cdc-equation">P(S* | E) ∝ P(E | S*) P(S*)</div>
+                </div>
+            </div>
+            
+            <div class="cdc-card">
+                <div class="cdc-header">
+                    <div class="cdc-icon">📚</div>
+                    <span class="cdc-title">Experiential Learning</span>
+                </div>
+                <div class="cdc-content">
+                    <p>The system accumulates experience, learning patterns from problem-solving history.</p>
+                    <div class="cdc-equation">θₜ₊₁ = θₜ + α ∇θ J(θₜ)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Visualization -->
+    <section class="viz-section">
+        <div class="section-header" style="max-width: 1100px; margin: 0 auto 2rem;">
+            <div class="section-num">02</div>
+            <h2>Problem Space Exploration</h2>
+            <p class="section-desc">Watch conscious agents explore the solution space</p>
+        </div>
+        
+        <div class="viz-container">
+            <div class="viz-header">
+                <span class="viz-title">CDC Optimization Simulation</span>
+                <div class="viz-controls">
+                    <button class="viz-btn active" onclick="setProblem('sat')">SAT</button>
+                    <button class="viz-btn" onclick="setProblem('tsp')">TSP</button>
+                    <button class="viz-btn" onclick="setProblem('coloring')">Graph Color</button>
+                </div>
+            </div>
+            <canvas id="problemCanvas"></canvas>
+            <div class="viz-legend">
+                <div class="legend-item">
+                    <span class="legend-dot" style="background: var(--accent-consciousness);"></span>
+                    <span>Conscious Agents</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background: var(--accent-computation);"></span>
+                    <span>Solution Candidates</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background: var(--accent-insight);"></span>
+                    <span>Best Found</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Results -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">03</div>
+            <h2>Experimental Results</h2>
+            <p class="section-desc">Performance on NP-hard benchmark problems</p>
+        </div>
+        
+        <div class="results-card">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Classical</th>
+                        <th>CDC</th>
+                        <th>Speedup</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="problem-tag">3-SAT</span> Random</td>
+                        <td>45.2s</td>
+                        <td>12.3s</td>
+                        <td class="improvement">3.67×</td>
+                    </tr>
+                    <tr>
+                        <td><span class="problem-tag">SAT</span> Industrial</td>
+                        <td>180.5s</td>
+                        <td>89.4s</td>
+                        <td class="improvement">2.02×</td>
+                    </tr>
+                    <tr>
+                        <td><span class="problem-tag">TSP</span> berlin52</td>
+                        <td>Optimal</td>
+                        <td>1.07% gap</td>
+                        <td class="improvement">~Optimal</td>
+                    </tr>
+                    <tr>
+                        <td><span class="problem-tag">TSP</span> kroA100</td>
+                        <td>Optimal</td>
+                        <td>2.69% gap</td>
+                        <td class="improvement">Near-Optimal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="disclaimer" style="margin-top: 3rem;">
+            <h4>⚠️ Important Disclaimer</h4>
+            <p>
+                This paper presents a theoretical framework and computational approach. 
+                It does not claim to prove P = NP or P ≠ NP. The results demonstrate 
+                practical speedups, not theoretical complexity class separation.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Philosophy -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">04</div>
+            <h2>Philosophical Implications</h2>
+            <p class="section-desc">If consciousness provides computational advantages</p>
+        </div>
+        
+        <div class="philosophy-grid">
+            <div class="philosophy-card">
+                <h3>Consciousness & Computability</h3>
+                <p>If CDC solves problems beyond classical computation, consciousness may not be Turing-computable, suggesting the Church-Turing thesis may require revision.</p>
+            </div>
+            <div class="philosophy-card">
+                <h3>Free Will & Determinism</h3>
+                <p>Conscious choice may involve non-deterministic processes. Decision-making may leverage quantum uncertainty in ways that affect computational outcomes.</p>
+            </div>
+            <div class="philosophy-card">
+                <h3>AI & Consciousness</h3>
+                <p>Conscious AI might solve currently intractable problems. Consciousness tests may involve computational capabilities, adding ethics dimensions.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Explore the Framework</h2>
+        <p>Dive into the complete theoretical analysis, mathematical proofs, and implementation details.</p>
+        <div class="cta-buttons">
+            <a href="../../documentation/whitepapers/pnp-consciousness.md" class="btn btn-primary">Read Full Whitepaper</a>
+            <a href="../ai-research/index.html" class="btn btn-secondary">All Research</a>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2025 Jimmy De Jesus, Bravetto LLC. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="../ai-research/index.html">AI Research</a> · 
+            <a href="../quantum-reservoir/index.html">Quantum Reservoir</a> · 
+            <a href="https://github.com/jimmyjdejesus-cmyk">GitHub</a>
+        </p>
+    </footer>
+    
+    <script>
+        // Consciousness background
+        const consCanvas = document.getElementById('consciousnessCanvas');
+        const consCtx = consCanvas.getContext('2d');
+        
+        function resizeConsCanvas() {
+            consCanvas.width = window.innerWidth;
+            consCanvas.height = window.innerHeight;
+        }
+        resizeConsCanvas();
+        window.addEventListener('resize', resizeConsCanvas);
+        
+        // Consciousness particles
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * consCanvas.width,
+                y: Math.random() * consCanvas.height,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                radius: Math.random() * 2 + 1,
+                consciousness: Math.random()
+            });
+        }
+        
+        function animateConsciousness() {
+            consCtx.fillStyle = 'rgba(5, 5, 8, 0.05)';
+            consCtx.fillRect(0, 0, consCanvas.width, consCanvas.height);
+            
+            particles.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.consciousness += (Math.random() - 0.5) * 0.01;
+                p.consciousness = Math.max(0, Math.min(1, p.consciousness));
+                
+                if (p.x < 0 || p.x > consCanvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > consCanvas.height) p.vy *= -1;
+                
+                // Draw connections
+                particles.forEach((other, j) => {
+                    if (i !== j) {
+                        const dx = other.x - p.x;
+                        const dy = other.y - p.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (dist < 100 && p.consciousness > 0.5 && other.consciousness > 0.5) {
+                            consCtx.beginPath();
+                            consCtx.moveTo(p.x, p.y);
+                            consCtx.lineTo(other.x, other.y);
+                            consCtx.strokeStyle = `rgba(157, 78, 221, ${(1 - dist / 100) * 0.3})`;
+                            consCtx.stroke();
+                        }
+                    }
+                });
+                
+                // Draw particle
+                const hue = p.consciousness > 0.7 ? '280' : '200';
+                consCtx.beginPath();
+                consCtx.arc(p.x, p.y, p.radius * (1 + p.consciousness), 0, Math.PI * 2);
+                consCtx.fillStyle = `hsla(${hue}, 70%, 60%, ${0.3 + p.consciousness * 0.5})`;
+                consCtx.fill();
+            });
+            
+            requestAnimationFrame(animateConsciousness);
+        }
+        animateConsciousness();
+        
+        // Problem visualization
+        const probCanvas = document.getElementById('problemCanvas');
+        const probCtx = probCanvas.getContext('2d');
+        
+        function resizeProbCanvas() {
+            const rect = probCanvas.getBoundingClientRect();
+            probCanvas.width = rect.width;
+            probCanvas.height = 350;
+        }
+        resizeProbCanvas();
+        window.addEventListener('resize', resizeProbCanvas);
+        
+        let currentProblem = 'sat';
+        const agents = [];
+        const solutions = [];
+        let bestSolution = null;
+        
+        // Initialize agents
+        for (let i = 0; i < 20; i++) {
+            agents.push({
+                x: Math.random() * 800 + 50,
+                y: Math.random() * 300 + 25,
+                vx: (Math.random() - 0.5) * 3,
+                vy: (Math.random() - 0.5) * 3,
+                consciousness: Math.random(),
+                trail: []
+            });
+        }
+        
+        // Initialize solution candidates
+        for (let i = 0; i < 30; i++) {
+            solutions.push({
+                x: Math.random() * 800 + 50,
+                y: Math.random() * 300 + 25,
+                quality: Math.random()
+            });
+        }
+        
+        function setProblem(problem) {
+            currentProblem = problem;
+            document.querySelectorAll('.viz-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Reinitialize
+            solutions.forEach(s => {
+                s.x = Math.random() * (probCanvas.width - 100) + 50;
+                s.y = Math.random() * 300 + 25;
+                s.quality = Math.random();
+            });
+            bestSolution = null;
+        }
+        
+        function animateProblem() {
+            probCtx.fillStyle = '#0a0a10';
+            probCtx.fillRect(0, 0, probCanvas.width, probCanvas.height);
+            
+            // Draw solutions
+            solutions.forEach(s => {
+                probCtx.beginPath();
+                probCtx.arc(s.x, s.y, 4 + s.quality * 6, 0, Math.PI * 2);
+                probCtx.fillStyle = `rgba(0, 212, 255, ${0.3 + s.quality * 0.5})`;
+                probCtx.fill();
+            });
+            
+            // Draw best solution
+            if (bestSolution) {
+                probCtx.beginPath();
+                probCtx.arc(bestSolution.x, bestSolution.y, 15, 0, Math.PI * 2);
+                probCtx.strokeStyle = '#ffd60a';
+                probCtx.lineWidth = 3;
+                probCtx.stroke();
+                probCtx.fillStyle = 'rgba(255, 214, 10, 0.3)';
+                probCtx.fill();
+            }
+            
+            // Update and draw agents
+            agents.forEach(agent => {
+                // Swarm behavior toward high-quality solutions
+                let fx = 0, fy = 0;
+                solutions.forEach(s => {
+                    const dx = s.x - agent.x;
+                    const dy = s.y - agent.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist > 0 && dist < 150) {
+                        const force = s.quality / dist;
+                        fx += (dx / dist) * force * 0.5;
+                        fy += (dy / dist) * force * 0.5;
+                    }
+                });
+                
+                agent.vx = agent.vx * 0.95 + fx + (Math.random() - 0.5) * 0.5;
+                agent.vy = agent.vy * 0.95 + fy + (Math.random() - 0.5) * 0.5;
+                
+                agent.x += agent.vx;
+                agent.y += agent.vy;
+                
+                // Bounds
+                if (agent.x < 50) { agent.x = 50; agent.vx *= -1; }
+                if (agent.x > probCanvas.width - 50) { agent.x = probCanvas.width - 50; agent.vx *= -1; }
+                if (agent.y < 25) { agent.y = 25; agent.vy *= -1; }
+                if (agent.y > 325) { agent.y = 325; agent.vy *= -1; }
+                
+                // Trail
+                agent.trail.push({ x: agent.x, y: agent.y });
+                if (agent.trail.length > 20) agent.trail.shift();
+                
+                // Draw trail
+                if (agent.trail.length > 1) {
+                    probCtx.beginPath();
+                    probCtx.moveTo(agent.trail[0].x, agent.trail[0].y);
+                    agent.trail.forEach(p => probCtx.lineTo(p.x, p.y));
+                    probCtx.strokeStyle = 'rgba(157, 78, 221, 0.2)';
+                    probCtx.stroke();
+                }
+                
+                // Draw agent
+                probCtx.beginPath();
+                probCtx.arc(agent.x, agent.y, 6, 0, Math.PI * 2);
+                probCtx.fillStyle = `rgba(157, 78, 221, ${0.5 + agent.consciousness * 0.5})`;
+                probCtx.fill();
+                
+                // Check if found good solution
+                solutions.forEach(s => {
+                    const dx = s.x - agent.x;
+                    const dy = s.y - agent.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 15 && s.quality > 0.8) {
+                        if (!bestSolution || s.quality > bestSolution.quality) {
+                            bestSolution = s;
+                        }
+                    }
+                });
+            });
+            
+            requestAnimationFrame(animateProblem);
+        }
+        animateProblem();
+    </script>
+</body>
+</html>
+

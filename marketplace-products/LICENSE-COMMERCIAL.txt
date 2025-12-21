@@ -1,0 +1,16 @@
+COMMERCIAL LICENSE
+
+Copyright (c) 2025 Bravetto
+
+This is a commercial license for the software product.
+
+TERMS:
+1. This license grants you the right to use the software for commercial purposes.
+2. You may NOT redistribute, resell, or sublicense the software.
+3. You may modify the software for your internal use only.
+4. This license is valid for the duration specified in your purchase agreement.
+5. All rights not expressly granted are reserved.
+
+For questions about commercial licensing:
+Email: jimmy@bravetto.com
+

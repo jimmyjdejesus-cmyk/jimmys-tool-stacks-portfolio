@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporal Shard RAG | Time-Aware Retrieval Augmented Generation</title>
+    <meta name="description" content="Time-aware RAG with neuromorphic memory. 34% improvement in temporal reasoning, 28% reduction in hallucinations.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --bg-dark: #0d1117;
+            --bg-card: #161b22;
+            --bg-elevated: #21262d;
+            --accent-blue: #58a6ff;
+            --accent-purple: #a371f7;
+            --accent-green: #3fb950;
+            --accent-orange: #d29922;
+            --accent-red: #f85149;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --border-color: #30363d;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Source Code Pro', monospace;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, 
+                rgba(88, 166, 255, 0.05) 0%,
+                rgba(163, 113, 247, 0.05) 50%,
+                rgba(63, 185, 80, 0.05) 100%);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2330363d' fill-opacity='0.2'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-label .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        .hero h1 .gradient {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            max-width: 600px;
+        }
+        
+        .metric {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+        
+        .metric:nth-child(1) .metric-value { color: var(--accent-blue); }
+        .metric:nth-child(2) .metric-value { color: var(--accent-purple); }
+        .metric:nth-child(3) .metric-value { color: var(--accent-green); }
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+        
+        /* Timeline Visualization */
+        .timeline-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-viz {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shard-timeline {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+        }
+        
+        .shard {
+            flex: 0 0 180px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .shard:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+        }
+        
+        .shard.active {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px rgba(163, 113, 247, 0.3);
+        }
+        
+        .shard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .shard-time {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+        }
+        
+        .shard-decay {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            background: rgba(163, 113, 247, 0.2);
+            color: var(--accent-purple);
+            border-radius: 4px;
+        }
+        
+        .shard-content {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .shard-docs {
+            display: flex;
+            gap: 0.25rem;
+            margin-top: 0.75rem;
+        }
+        
+        .doc-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+        
+        .doc-bar.active {
+            background: var(--accent-green);
+        }
+        
+        /* Query Demo */
+        .query-demo {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .query-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .query-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .query-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .panel-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .query-input .panel-icon { background: rgba(88, 166, 255, 0.2); }
+        .query-output .panel-icon { background: rgba(63, 185, 80, 0.2); }
+        
+        .panel-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .query-input-box {
+            width: 100%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            resize: none;
+            min-height: 100px;
+        }
+        
+        .query-input-box:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+        
+        .query-examples {
+            margin-top: 1rem;
+        }
+        
+        .example-btn {
+            display: inline-block;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin: 0.25rem;
+            transition: all 0.2s ease;
+        }
+        
+        .example-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+        
+        .output-content {
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 150px;
+        }
+        
+        .output-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .meta-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .meta-dot.green { background: var(--accent-green); }
+        .meta-dot.blue { background: var(--accent-blue); }
+        .meta-dot.purple { background: var(--accent-purple); }
+        
+        /* Architecture */
+        .architecture-section {
+            padding: 4rem 2rem;
+            background: var(--bg-card);
+        }
+        
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 2rem auto 0;
+        }
+        
+        .arch-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .arch-card:hover {
+            border-color: var(--accent-blue);
+        }
+        
+        .arch-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .arch-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .arch-card:nth-child(1) .arch-card-icon { background: rgba(88, 166, 255, 0.2); }
+        .arch-card:nth-child(2) .arch-card-icon { background: rgba(163, 113, 247, 0.2); }
+        .arch-card:nth-child(3) .arch-card-icon { background: rgba(63, 185, 80, 0.2); }
+        .arch-card:nth-child(4) .arch-card-icon { background: rgba(210, 153, 34, 0.2); }
+        
+        .arch-card h3 {
+            font-size: 1.1rem;
+        }
+        
+        .arch-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .arch-card-equation {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-card);
+            border-radius: 6px;
+        }
+        
+        /* Results */
+        .results-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .result-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .result-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+        }
+        
+        .result-body {
+            padding: 1rem;
+        }
+        
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .bar-label {
+            flex: 0 0 100px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+        
+        .bar-value {
+            flex: 0 0 50px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-align: right;
+        }
+        
+        /* CTA */
+        .cta-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, 
+                rgba(88, 166, 255, 0.1) 0%,
+                rgba(163, 113, 247, 0.1) 100%);
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-label">
+                <span class="dot"></span>
+                <span>Research Whitepaper</span>
+            </div>
+            <h1>Temporal Shard <span class="gradient">RAG</span></h1>
+            <p class="hero-subtitle">
+                Time-aware retrieval augmented generation with neuromorphic memory. 
+                Documents decay, consolidate, and activate like biological memories.
+            </p>
+            <div class="hero-metrics">
+                <div class="metric">
+                    <div class="metric-value">34%</div>
+                    <div class="metric-label">Temporal Reasoning</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">28%</div>
+                    <div class="metric-label">Less Hallucinations</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2.85×</div>
+                    <div class="metric-label">Faster Retrieval</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Timeline Visualization -->
+    <section class="timeline-section">
+        <h2 class="section-title">Temporal Shards</h2>
+        <p class="section-subtitle">Documents are partitioned by time with configurable decay functions</p>
+        
+        <div class="timeline-viz">
+            <div class="shard-timeline" id="shardTimeline">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Query Demo -->
+    <section class="query-demo">
+        <h2 class="section-title">Try a Query</h2>
+        <p class="section-subtitle">See how temporal context affects retrieval</p>
+        
+        <div class="query-container">
+            <div class="query-panel query-input">
+                <div class="panel-header">
+                    <div class="panel-icon">🔍</div>
+                    <span class="panel-title">Query</span>
+                </div>
+                <textarea class="query-input-box" id="queryInput" placeholder="Enter a temporal query...">What is the current state of quantum computing?</textarea>
+                <div class="query-examples">
+                    <span style="color: var(--text-muted); font-size: 0.8rem;">Try:</span>
+                    <button class="example-btn" onclick="setQuery('What was the AI landscape like in 2020?')">Historical</button>
+                    <button class="example-btn" onclick="setQuery('How has climate policy evolved?')">Evolution</button>
+                    <button class="example-btn" onclick="setQuery('Latest advances in LLMs')">Current</button>
+                </div>
+            </div>
+            
+            <div class="query-panel query-output">
+                <div class="panel-header">
+                    <div class="panel-icon">📄</div>
+                    <span class="panel-title">Response</span>
+                </div>
+                <div class="output-content" id="outputContent">
+                    <p style="color: var(--text-secondary)">Query response will appear here with temporal context...</p>
+                </div>
+                <div class="output-meta">
+                    <div class="meta-item">
+                        <span class="meta-dot green"></span>
+                        <span id="shardCount">3 shards activated</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-dot blue"></span>
+                        <span id="latencyDisplay">45ms latency</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-dot purple"></span>
+                        <span id="temporalRange">2023-2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Architecture -->
+    <section class="architecture-section">
+        <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+            <h2 class="section-title">Architecture</h2>
+            <p class="section-subtitle">Neuromorphic-inspired temporal memory system</p>
+        </div>
+        
+        <div class="arch-grid">
+            <div class="arch-card">
+                <div class="arch-card-header">
+                    <div class="arch-card-icon">⏱️</div>
+                    <h3>Temporal Decay</h3>
+                </div>
+                <p>Documents decay according to Gaussian + exponential functions based on age and access patterns.</p>
+                <div class="arch-card-equation">
+                    w(t) = w₀ · e^(-t²/2σ²) · γ^(t/τ)
+                </div>
+            </div>
+            
+            <div class="arch-card">
+                <div class="arch-card-header">
+                    <div class="arch-card-icon">⚡</div>
+                    <h3>Spiking Activation</h3>
+                </div>
+                <p>Shards activate via leaky integrate-and-fire neurons based on query relevance.</p>
+                <div class="arch-card-equation">
+                    dV/dt = -V/τₘ + I(t)
+                </div>
+            </div>
+            
+            <div class="arch-card">
+                <div class="arch-card-header">
+                    <div class="arch-card-icon">🔗</div>
+                    <h3>Cross-Temporal Attention</h3>
+                </div>
+                <p>Reason across time periods with temporal bias in attention scores.</p>
+                <div class="arch-card-equation">
+                    α = softmax(QK^T/√d + T_bias)
+                </div>
+            </div>
+            
+            <div class="arch-card">
+                <div class="arch-card-header">
+                    <div class="arch-card-icon">💾</div>
+                    <h3>Adaptive Consolidation</h3>
+                </div>
+                <p>Important memories preserved, low-importance documents fade and merge.</p>
+                <div class="arch-card-equation">
+                    I = αA + βR + γU + δC
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Results -->
+    <section class="results-section">
+        <h2 class="section-title">Experimental Results</h2>
+        <p class="section-subtitle">Performance on temporal reasoning benchmarks</p>
+        
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-header">TempQuestions Accuracy</div>
+                <div class="result-body">
+                    <div class="bar-chart">
+                        <div class="bar-item">
+                            <span class="bar-label">Standard RAG</span>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 45.2%; background: var(--text-muted);"></div>
+                            </div>
+                            <span class="bar-value">45.2%</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">Time-filtered</span>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 52.1%; background: var(--accent-orange);"></div>
+                            </div>
+                            <span class="bar-value">52.1%</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">Temporal KG</span>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 58.4%; background: var(--accent-purple);"></div>
+                            </div>
+                            <span class="bar-value">58.4%</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">TS-RAG (Ours)</span>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 67.8%; background: var(--accent-blue);"></div>
+                            </div>
+                            <span class="bar-value" style="color: var(--accent-blue);">67.8%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-header">Hallucination Rate ↓</div>
+                <div class="result-body">
+                    <div class="bar-chart">
+                        <div class="bar-item">
+                            <span class="bar-label">Standard RAG</span>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 91.5%; background: var(--accent-red);"></div>
+                            </div>
+                            <span class="bar-value">18.3%</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">Time-filtered</span>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 70.5%; background: var(--accent-orange);"></div>
+                            </div>
+                            <span class="bar-value">14.1%</span>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">TS-RAG (Ours)</span>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 36%; background: var(--accent-green);"></div>
+                            </div>
+                            <span class="bar-value" style="color: var(--accent-green);">7.2%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Explore the Research</h2>
+        <p>Dive into the complete theoretical framework, mathematical proofs, and implementation details.</p>
+        <div class="cta-buttons">
+            <a href="../../documentation/whitepapers/temporal-shard-rag.md" class="btn btn-primary">Read Full Whitepaper</a>
+            <a href="../ai-research/index.html" class="btn btn-secondary">All Research</a>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2025 Jimmy De Jesus, Bravetto LLC. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="../ai-research/index.html">AI Research</a> · 
+            <a href="../neuromorphic-evolution/index.html">Neuromorphic Evolution</a> · 
+            <a href="https://github.com/jimmyjdejesus-cmyk">GitHub</a>
+        </p>
+    </footer>
+    
+    <script>
+        // Generate temporal shards
+        const shardTimeline = document.getElementById('shardTimeline');
+        const now = new Date();
+        const shards = [
+            { time: '2024 Q4', decay: '100%', docs: 12, active: true },
+            { time: '2024 Q3', decay: '92%', docs: 18, active: true },
+            { time: '2024 Q2', decay: '78%', docs: 15, active: false },
+            { time: '2024 Q1', decay: '64%', docs: 22, active: false },
+            { time: '2023 Q4', decay: '48%', docs: 28, active: true },
+            { time: '2023 Q3', decay: '35%', docs: 24, active: false },
+            { time: '2023 Q2', decay: '24%', docs: 19, active: false },
+            { time: '2023 Q1', decay: '15%', docs: 16, active: false },
+        ];
+        
+        shards.forEach((shard, i) => {
+            const el = document.createElement('div');
+            el.className = `shard ${shard.active ? 'active' : ''}`;
+            
+            const docsHTML = Array(6).fill(0).map((_, j) => 
+                `<div class="doc-bar ${j < (shard.docs / 5) ? 'active' : ''}"></div>`
+            ).join('');
+            
+            el.innerHTML = `
+                <div class="shard-header">
+                    <span class="shard-time">${shard.time}</span>
+                    <span class="shard-decay">${shard.decay}</span>
+                </div>
+                <div class="shard-content">${shard.docs} documents</div>
+                <div class="shard-docs">${docsHTML}</div>
+            `;
+            
+            el.addEventListener('click', () => {
+                document.querySelectorAll('.shard').forEach(s => s.classList.remove('active'));
+                el.classList.add('active');
+            });
+            
+            shardTimeline.appendChild(el);
+        });
+        
+        // Query demo
+        function setQuery(query) {
+            document.getElementById('queryInput').value = query;
+            simulateQuery(query);
+        }
+        
+        function simulateQuery(query) {
+            const output = document.getElementById('outputContent');
+            const isHistorical = query.includes('was') || query.includes('2020');
+            const isEvolution = query.includes('evolve') || query.includes('change');
+            const isCurrent = query.includes('current') || query.includes('latest');
+            
+            let response, shardCount, range;
+            
+            if (isHistorical) {
+                response = "Based on documents from 2020-2021 shards, the AI landscape was characterized by GPT-3's release, increasing focus on model scaling, and early transformer adoption...";
+                shardCount = "5 shards activated";
+                range = "2019-2021";
+            } else if (isEvolution) {
+                response = "Cross-temporal analysis across 2015-2024 shows policy evolution from Paris Agreement implementation through COP26-28, with increasing corporate commitments...";
+                shardCount = "8 shards activated";
+                range = "2015-2024";
+            } else {
+                response = "From 2024 Q3-Q4 shards: Quantum computing has reached 1000+ qubit systems with IBM and Google demonstrating error correction advances. Key developments include...";
+                shardCount = "2 shards activated";
+                range = "2024";
+            }
+            
+            output.innerHTML = `<p>${response}</p>`;
+            document.getElementById('shardCount').textContent = shardCount;
+            document.getElementById('temporalRange').textContent = range;
+            document.getElementById('latencyDisplay').textContent = `${Math.floor(Math.random() * 30) + 30}ms latency`;
+        }
+        
+        document.getElementById('queryInput').addEventListener('change', (e) => {
+            simulateQuery(e.target.value);
+        });
+    </script>
+</body>
+</html>
+

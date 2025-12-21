@@ -1,0 +1,38 @@
+{
+  "title": "Jimmy De Jesus - AI Research Whitepapers Collection",
+  "description": "A collection of academic whitepapers exploring novel intersections of quantum computing, neuromorphic systems, and artificial intelligence. Includes research on Quantum Reservoir Computing, Neuromorphic Evolution, Temporal Shard RAG, P=NP Consciousness approaches, Wetware Computing, and Neuromorphic Code Intelligence.",
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    {
+      "name": "De Jesus, Jimmy",
+      "affiliation": "Independent Researcher",
+      "orcid": ""
+    }
+  ],
+  "keywords": [
+    "quantum computing",
+    "reservoir computing",
+    "neuromorphic computing",
+    "artificial intelligence",
+    "machine learning",
+    "quantum gravity",
+    "liquid neural networks",
+    "evolutionary algorithms",
+    "consciousness",
+    "wetware computing"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/jimmydejesus/jimmys-tool-stacks-portfolio",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "communities": [
+    {"identifier": "zenodo"}
+  ]
+}
+

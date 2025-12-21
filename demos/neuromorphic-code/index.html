@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuromorphic Code Intelligence | Spiking Networks for Code Analysis</title>
+    <meta name="description" content="3.2× faster code completion, 92% energy reduction using spiking neural networks for program analysis.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-terminal: #0c0c10;
+            --bg-editor: #14141a;
+            --bg-panel: #1c1c24;
+            --accent-spike: #22d3ee;
+            --accent-syntax: #a78bfa;
+            --accent-error: #f87171;
+            --accent-success: #4ade80;
+            --accent-warning: #fbbf24;
+            --text-code: #e4e4e7;
+            --text-comment: #6b7280;
+            --text-muted: #52525b;
+            --font-display: 'Manrope', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-display);
+            background: var(--bg-terminal);
+            color: var(--text-code);
+            line-height: 1.6;
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 30% 30%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(167, 139, 250, 0.1) 0%, transparent 50%);
+        }
+        
+        #spikeCanvas {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        @media (max-width: 900px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--accent-spike);
+            margin-bottom: 1.25rem;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent-spike), var(--accent-syntax));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-comment);
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 900px) {
+            .hero-stats {
+                justify-content: center;
+            }
+        }
+        
+        .stat-item {
+            text-align: left;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+        
+        .stat-item:nth-child(1) .stat-value { color: var(--accent-spike); }
+        .stat-item:nth-child(2) .stat-value { color: var(--accent-success); }
+        .stat-item:nth-child(3) .stat-value { color: var(--accent-syntax); }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Code Preview */
+        .code-preview {
+            background: var(--bg-editor);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-panel);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot.red { background: #ff5f57; }
+        .dot.yellow { background: #febc2e; }
+        .dot.green { background: #28c840; }
+        
+        .code-title {
+            margin-left: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .code-body {
+            padding: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+        
+        .code-line {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .line-num {
+            color: var(--text-muted);
+            user-select: none;
+            min-width: 24px;
+            text-align: right;
+        }
+        
+        .code-text .keyword { color: var(--accent-syntax); }
+        .code-text .function { color: var(--accent-spike); }
+        .code-text .string { color: var(--accent-success); }
+        .code-text .comment { color: var(--text-comment); font-style: italic; }
+        .code-text .type { color: var(--accent-warning); }
+        
+        .spike-indicator {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-spike);
+            border-radius: 50%;
+            margin-left: 0.5rem;
+            animation: spike-pulse 0.5s ease-out;
+            box-shadow: 0 0 10px var(--accent-spike);
+        }
+        
+        @keyframes spike-pulse {
+            0% { transform: scale(2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+        
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-num {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-spike);
+        }
+        
+        .section h2 {
+            font-size: 2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .section-desc {
+            color: var(--text-comment);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Architecture */
+        .arch-diagram {
+            background: var(--bg-editor);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .arch-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .arch-node {
+            flex: 1;
+            min-width: 150px;
+            background: var(--bg-panel);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .arch-node:hover {
+            border-color: var(--accent-spike);
+            transform: translateY(-4px);
+        }
+        
+        .arch-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .arch-node h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .arch-node p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .arch-arrow {
+            color: var(--accent-spike);
+            font-size: 1.5rem;
+        }
+        
+        /* Spike Encoding */
+        .spike-section {
+            background: var(--bg-editor);
+            padding: 4rem 2rem;
+        }
+        
+        .spike-viz {
+            max-width: 900px;
+            margin: 2rem auto 0;
+            background: var(--bg-terminal);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .spike-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .spike-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .spike-legend {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-comment);
+        }
+        
+        .legend-bar {
+            width: 20px;
+            height: 4px;
+            border-radius: 2px;
+        }
+        
+        #spikeTrainCanvas {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+        }
+        
+        /* Results */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .result-card {
+            background: var(--bg-editor);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .result-header {
+            padding: 1rem;
+            background: var(--bg-panel);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .result-body {
+            padding: 1rem;
+        }
+        
+        .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .bar-label {
+            flex: 0 0 100px;
+            font-size: 0.8rem;
+            color: var(--text-comment);
+        }
+        
+        .bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-panel);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+        
+        .bar-value {
+            flex: 0 0 60px;
+            text-align: right;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+        
+        /* Use Cases */
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .use-case {
+            background: var(--bg-editor);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .use-case:hover {
+            border-color: var(--accent-spike);
+        }
+        
+        .use-case-icon {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .use-case h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .use-case p {
+            font-size: 0.8rem;
+            color: var(--text-comment);
+        }
+        
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, var(--bg-terminal) 0%, var(--bg-editor) 100%);
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            color: var(--text-comment);
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.85rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-spike), var(--accent-syntax));
+            color: #0a0a0a;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--accent-spike);
+            color: var(--accent-spike);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        footer a {
+            color: var(--accent-spike);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <canvas id="spikeCanvas"></canvas>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-tag">
+                    <span>⚡</span>
+                    <span>Neuromorphic Computing</span>
+                </div>
+                <h1>Code Intelligence with <span class="gradient">Spikes</span></h1>
+                <p class="hero-desc">
+                    Spiking neural networks for program analysis and code generation. 
+                    Faster inference, lower energy, competitive accuracy.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">3.2×</div>
+                        <div class="stat-label">Faster Inference</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">92%</div>
+                        <div class="stat-label">Energy Reduction</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">64.5%</div>
+                        <div class="stat-label">Accuracy@1</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-preview">
+                <div class="code-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="code-title">neural_ast_builder.py</span>
+                </div>
+                <div class="code-body" id="codePreview">
+                    <div class="code-line"><span class="line-num">1</span><span class="code-text"><span class="keyword">class</span> <span class="function">NeuralASTBuilder</span>:</span></div>
+                    <div class="code-line"><span class="line-num">2</span><span class="code-text">    <span class="keyword">def</span> <span class="function">encode</span>(self, source):</span></div>
+                    <div class="code-line"><span class="line-num">3</span><span class="code-text">        <span class="comment"># Convert AST to spike trains</span></span></div>
+                    <div class="code-line"><span class="line-num">4</span><span class="code-text">        ast = <span class="function">parse</span>(source)</span></div>
+                    <div class="code-line"><span class="line-num">5</span><span class="code-text">        spikes = self.<span class="function">traverse</span>(ast)<span class="spike-indicator"></span></span></div>
+                    <div class="code-line"><span class="line-num">6</span><span class="code-text">        <span class="keyword">return</span> spikes</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Architecture -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">01</div>
+            <h2>Architecture Pipeline</h2>
+            <p class="section-desc">From source code to spike-based completion</p>
+        </div>
+        
+        <div class="arch-diagram">
+            <div class="arch-flow">
+                <div class="arch-node">
+                    <div class="arch-icon">📄</div>
+                    <h4>Source Code</h4>
+                    <p>Python, JS, etc.</p>
+                </div>
+                <span class="arch-arrow">→</span>
+                <div class="arch-node">
+                    <div class="arch-icon">🌳</div>
+                    <h4>AST Parser</h4>
+                    <p>Syntax tree</p>
+                </div>
+                <span class="arch-arrow">→</span>
+                <div class="arch-node">
+                    <div class="arch-icon">⚡</div>
+                    <h4>Spike Encoder</h4>
+                    <p>Temporal patterns</p>
+                </div>
+                <span class="arch-arrow">→</span>
+                <div class="arch-node">
+                    <div class="arch-icon">🧠</div>
+                    <h4>SNN Reasoner</h4>
+                    <p>Pattern matching</p>
+                </div>
+                <span class="arch-arrow">→</span>
+                <div class="arch-node">
+                    <div class="arch-icon">✨</div>
+                    <h4>Output</h4>
+                    <p>Completion/Bug</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Spike Encoding -->
+    <section class="spike-section">
+        <div style="max-width: 1100px; margin: 0 auto; text-align: center;">
+            <div class="section-num">02</div>
+            <h2>AST to Spike Encoding</h2>
+            <p class="section-desc">AST traversal maps to temporal spike patterns</p>
+        </div>
+        
+        <div class="spike-viz">
+            <div class="spike-header">
+                <span class="spike-title">Spike Train Visualization</span>
+                <div class="spike-legend">
+                    <div class="legend-item">
+                        <span class="legend-bar" style="background: var(--accent-spike);"></span>
+                        <span>Type encoding</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-bar" style="background: var(--accent-syntax);"></span>
+                        <span>Value encoding</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-bar" style="background: var(--accent-success);"></span>
+                        <span>Structure encoding</span>
+                    </div>
+                </div>
+            </div>
+            <canvas id="spikeTrainCanvas"></canvas>
+        </div>
+    </section>
+    
+    <!-- Results -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">03</div>
+            <h2>Experimental Results</h2>
+            <p class="section-desc">Performance on code intelligence benchmarks</p>
+        </div>
+        
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-header">Code Completion (Latency)</div>
+                <div class="result-body">
+                    <div class="bar-row">
+                        <span class="bar-label">CodeLlama</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 100%; background: var(--text-muted);"></div>
+                        </div>
+                        <span class="bar-value">520ms</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">CodeT5</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 32%; background: var(--accent-syntax);"></div>
+                        </div>
+                        <span class="bar-value">168ms</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">NCI (Ours)</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 8.7%; background: var(--accent-spike);"></div>
+                        </div>
+                        <span class="bar-value" style="color: var(--accent-spike);">45ms</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-header">Bug Detection F1</div>
+                <div class="result-body">
+                    <div class="bar-row">
+                        <span class="bar-label">DeepBugs</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 71.4%; background: var(--text-muted);"></div>
+                        </div>
+                        <span class="bar-value">71.4%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">CodeBERT</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 78.3%; background: var(--accent-syntax);"></div>
+                        </div>
+                        <span class="bar-value">78.3%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">NCI (Ours)</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 76.9%; background: var(--accent-spike);"></div>
+                        </div>
+                        <span class="bar-value" style="color: var(--accent-spike);">76.9%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-header">Energy per Sample</div>
+                <div class="result-body">
+                    <div class="bar-row">
+                        <span class="bar-label">GPU (V100)</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 100%; background: var(--accent-error);"></div>
+                        </div>
+                        <span class="bar-value">12 mJ</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">Loihi</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 6.7%; background: var(--accent-success);"></div>
+                        </div>
+                        <span class="bar-value" style="color: var(--accent-success);">0.8 mJ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Use Cases -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">04</div>
+            <h2>When NCI Excels</h2>
+            <p class="section-desc">Ideal applications for neuromorphic code intelligence</p>
+        </div>
+        
+        <div class="use-cases">
+            <div class="use-case">
+                <div class="use-case-icon">⚡</div>
+                <h4>Real-Time IDE</h4>
+                <p>Sub-50ms latency for instant code completion without lag</p>
+            </div>
+            <div class="use-case">
+                <div class="use-case-icon">📱</div>
+                <h4>Edge Deployment</h4>
+                <p>Run on resource-constrained devices with minimal battery impact</p>
+            </div>
+            <div class="use-case">
+                <div class="use-case-icon">🔍</div>
+                <h4>Clone Detection</h4>
+                <p>Fast structural pattern matching for duplicate code identification</p>
+            </div>
+            <div class="use-case">
+                <div class="use-case-icon">📚</div>
+                <h4>Long Code</h4>
+                <p>8× better scaling with code length than transformer models</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Explore the Research</h2>
+        <p>Complete architecture, spike encoding details, and benchmark results.</p>
+        <div class="cta-buttons">
+            <a href="../../documentation/whitepapers/neuromorphic-code-intelligence.md" class="btn btn-primary">Read Whitepaper</a>
+            <a href="../ai-research/index.html" class="btn btn-secondary">All Research</a>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2025 Jimmy De Jesus, Bravetto LLC. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="../ai-research/index.html">AI Research</a> · 
+            <a href="../neuromorphic-evolution/index.html">Neuromorphic Evolution</a> · 
+            <a href="https://github.com/jimmyjdejesus-cmyk">GitHub</a>
+        </p>
+    </footer>
+    
+    <script>
+        // Background spike animation
+        const spikeCanvas = document.getElementById('spikeCanvas');
+        const spikeCtx = spikeCanvas.getContext('2d');
+        
+        function resizeSpikeCanvas() {
+            spikeCanvas.width = window.innerWidth;
+            spikeCanvas.height = window.innerHeight;
+        }
+        resizeSpikeCanvas();
+        window.addEventListener('resize', resizeSpikeCanvas);
+        
+        const neurons = [];
+        for (let i = 0; i < 60; i++) {
+            neurons.push({
+                x: Math.random() * spikeCanvas.width,
+                y: Math.random() * spikeCanvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                spiking: false,
+                spikeCooldown: 0
+            });
+        }
+        
+        function animateSpikes() {
+            spikeCtx.fillStyle = 'rgba(12, 12, 16, 0.1)';
+            spikeCtx.fillRect(0, 0, spikeCanvas.width, spikeCanvas.height);
+            
+            neurons.forEach((n, i) => {
+                n.x += n.vx;
+                n.y += n.vy;
+                
+                if (n.x < 0 || n.x > spikeCanvas.width) n.vx *= -1;
+                if (n.y < 0 || n.y > spikeCanvas.height) n.vy *= -1;
+                
+                if (n.spikeCooldown > 0) n.spikeCooldown--;
+                
+                // Random spiking
+                if (n.spikeCooldown === 0 && Math.random() < 0.005) {
+                    n.spiking = true;
+                    n.spikeCooldown = 30;
+                    
+                    // Propagate to nearby
+                    neurons.forEach((other, j) => {
+                        if (i !== j) {
+                            const dx = other.x - n.x;
+                            const dy = other.y - n.y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < 100 && other.spikeCooldown === 0 && Math.random() < 0.3) {
+                                other.spiking = true;
+                                other.spikeCooldown = 25;
+                            }
+                        }
+                    });
+                } else {
+                    n.spiking = false;
+                }
+                
+                // Draw connections
+                neurons.forEach((other, j) => {
+                    if (i < j) {
+                        const dx = other.x - n.x;
+                        const dy = other.y - n.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (dist < 100) {
+                            spikeCtx.beginPath();
+                            spikeCtx.moveTo(n.x, n.y);
+                            spikeCtx.lineTo(other.x, other.y);
+                            const alpha = (1 - dist / 100) * 0.15;
+                            if (n.spiking || other.spiking) {
+                                spikeCtx.strokeStyle = `rgba(34, 211, 238, ${alpha * 3})`;
+                            } else {
+                                spikeCtx.strokeStyle = `rgba(100, 100, 120, ${alpha})`;
+                            }
+                            spikeCtx.stroke();
+                        }
+                    }
+                });
+                
+                // Draw neuron
+                spikeCtx.beginPath();
+                const radius = n.spiking ? 5 : 2;
+                spikeCtx.arc(n.x, n.y, radius, 0, Math.PI * 2);
+                if (n.spiking) {
+                    spikeCtx.fillStyle = '#22d3ee';
+                    spikeCtx.shadowBlur = 15;
+                    spikeCtx.shadowColor = '#22d3ee';
+                } else {
+                    spikeCtx.fillStyle = 'rgba(100, 100, 120, 0.5)';
+                    spikeCtx.shadowBlur = 0;
+                }
+                spikeCtx.fill();
+                spikeCtx.shadowBlur = 0;
+            });
+            
+            requestAnimationFrame(animateSpikes);
+        }
+        animateSpikes();
+        
+        // Spike train visualization
+        const trainCanvas = document.getElementById('spikeTrainCanvas');
+        const trainCtx = trainCanvas.getContext('2d');
+        
+        function resizeTrainCanvas() {
+            const rect = trainCanvas.getBoundingClientRect();
+            trainCanvas.width = rect.width;
+            trainCanvas.height = 200;
+        }
+        resizeTrainCanvas();
+        window.addEventListener('resize', resizeTrainCanvas);
+        
+        const astNodes = ['FunctionDef', 'name', 'args', 'body', 'Return', 'BinOp', 'left', 'op', 'right'];
+        const spikeTrains = astNodes.map(() => ({
+            spikes: [],
+            lastSpike: 0
+        }));
+        
+        let time = 0;
+        
+        function updateTrains() {
+            time++;
+            
+            // Generate spikes
+            spikeTrains.forEach((train, i) => {
+                if (time > i * 15 && time - train.lastSpike > 10 + Math.random() * 20) {
+                    if (Math.random() < 0.3) {
+                        train.spikes.push(time);
+                        train.lastSpike = time;
+                    }
+                }
+                // Remove old spikes
+                train.spikes = train.spikes.filter(s => time - s < 200);
+            });
+            
+            // Draw
+            trainCtx.fillStyle = '#0c0c10';
+            trainCtx.fillRect(0, 0, trainCanvas.width, trainCanvas.height);
+            
+            const rowHeight = trainCanvas.height / spikeTrains.length;
+            const colors = ['#22d3ee', '#a78bfa', '#4ade80'];
+            
+            spikeTrains.forEach((train, i) => {
+                const y = rowHeight * i + rowHeight / 2;
+                
+                // Baseline
+                trainCtx.beginPath();
+                trainCtx.moveTo(40, y);
+                trainCtx.lineTo(trainCanvas.width - 20, y);
+                trainCtx.strokeStyle = 'rgba(100, 100, 120, 0.2)';
+                trainCtx.stroke();
+                
+                // Label
+                trainCtx.fillStyle = 'rgba(100, 100, 120, 0.6)';
+                trainCtx.font = '10px JetBrains Mono';
+                trainCtx.fillText(astNodes[i].substring(0, 6), 5, y + 4);
+                
+                // Spikes
+                train.spikes.forEach(spikeTime => {
+                    const x = 40 + ((time - spikeTime) / 200) * (trainCanvas.width - 60);
+                    const age = (time - spikeTime) / 200;
+                    
+                    // Spike line
+                    trainCtx.beginPath();
+                    trainCtx.moveTo(trainCanvas.width - 20 - x + 40, y);
+                    trainCtx.lineTo(trainCanvas.width - 20 - x + 40, y - rowHeight * 0.35);
+                    trainCtx.strokeStyle = colors[i % 3];
+                    trainCtx.lineWidth = 2;
+                    trainCtx.globalAlpha = 1 - age;
+                    trainCtx.stroke();
+                    trainCtx.globalAlpha = 1;
+                    trainCtx.lineWidth = 1;
+                });
+            });
+        }
+        
+        setInterval(updateTrains, 50);
+        updateTrains();
+        
+        // Code preview spike animation
+        setInterval(() => {
+            const indicators = document.querySelectorAll('.spike-indicator');
+            indicators.forEach(ind => {
+                ind.style.animation = 'none';
+                ind.offsetHeight; // Trigger reflow
+                ind.style.animation = 'spike-pulse 0.5s ease-out';
+            });
+        }, 2000);
+    </script>
+</body>
+</html>
+

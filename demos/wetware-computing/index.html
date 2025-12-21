@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wetware Computing | Biological-Digital Hybrid Systems</title>
+    <meta name="description" content="Abeone Wetware Core: 94% energy reduction through organic substrates with adaptive computation.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-organic: #0f1612;
+            --bg-cell: #141e1a;
+            --bg-membrane: #1a2a24;
+            --accent-bio: #4ade80;
+            --accent-neural: #60a5fa;
+            --accent-energy: #fbbf24;
+            --accent-warn: #f87171;
+            --text-light: #f0fdf4;
+            --text-mid: #a7c4a0;
+            --text-dim: #6b8068;
+            --font-display: 'Sora', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-display);
+            background: var(--bg-organic);
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(74, 222, 128, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(96, 165, 250, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 80%, rgba(251, 191, 36, 0.08) 0%, transparent 40%);
+        }
+        
+        #cellCanvas {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+        }
+        
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(74, 222, 128, 0.15);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent-bio);
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+        
+        .hero h1 .bio {
+            background: linear-gradient(135deg, var(--accent-bio), var(--accent-neural));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-sub {
+            font-size: 1.25rem;
+            color: var(--text-mid);
+            margin-bottom: 2.5rem;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+        
+        .hero-stat:nth-child(1) .stat-value { color: var(--accent-bio); }
+        .hero-stat:nth-child(2) .stat-value { color: var(--accent-neural); }
+        .hero-stat:nth-child(3) .stat-value { color: var(--accent-energy); }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-num {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent-bio);
+        }
+        
+        .section h2 {
+            font-size: 2.25rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-desc {
+            color: var(--text-mid);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Architecture */
+        .arch-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .arch-layer {
+            background: var(--bg-cell);
+            border: 1px solid rgba(74, 222, 128, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1.5rem;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .arch-layer:hover {
+            border-color: var(--accent-bio);
+            transform: translateX(10px);
+        }
+        
+        .layer-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .arch-layer:nth-child(1) .layer-icon { background: linear-gradient(135deg, rgba(74, 222, 128, 0.3), rgba(74, 222, 128, 0.1)); }
+        .arch-layer:nth-child(2) .layer-icon { background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(96, 165, 250, 0.1)); }
+        .arch-layer:nth-child(3) .layer-icon { background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0.1)); }
+        .arch-layer:nth-child(4) .layer-icon { background: linear-gradient(135deg, rgba(248, 113, 113, 0.3), rgba(248, 113, 113, 0.1)); }
+        
+        .layer-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .layer-content p {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+        }
+        
+        .layer-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            text-align: right;
+        }
+        
+        .layer-stat {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+        
+        /* Visualization */
+        .viz-container {
+            background: var(--bg-cell);
+            border: 1px solid rgba(74, 222, 128, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .viz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .viz-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .viz-legend {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-mid);
+        }
+        
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        #meaCanvas {
+            width: 100%;
+            height: 300px;
+            background: var(--bg-organic);
+            border-radius: 12px;
+        }
+        
+        /* Comparison */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .comp-card {
+            background: var(--bg-cell);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        
+        .comp-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .comp-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .comp-card.silicon .comp-icon { background: rgba(100, 100, 100, 0.3); }
+        .comp-card.wetware .comp-icon { background: rgba(74, 222, 128, 0.2); }
+        
+        .comp-title {
+            font-weight: 600;
+        }
+        
+        .comp-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+        
+        .metric-label {
+            color: var(--text-mid);
+        }
+        
+        .metric-value {
+            font-family: var(--font-mono);
+        }
+        
+        .comp-card.wetware .metric-value {
+            color: var(--accent-bio);
+        }
+        
+        /* Applications */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .app-card {
+            background: var(--bg-cell);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .app-card:hover {
+            border-color: var(--accent-bio);
+            transform: translateY(-4px);
+        }
+        
+        .app-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .app-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .app-card p {
+            font-size: 0.85rem;
+            color: var(--text-mid);
+        }
+        
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, var(--bg-organic) 0%, var(--bg-cell) 100%);
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            color: var(--text-mid);
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.85rem 1.75rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-bio), #22c55e);
+            color: #0a0a0a;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--accent-bio);
+            color: var(--accent-bio);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        footer a {
+            color: var(--accent-bio);
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .arch-layer {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .layer-stats {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <canvas id="cellCanvas"></canvas>
+        <div class="hero-content">
+            <div class="hero-tag">
+                <span>🧬</span>
+                <span>Biocomputing Research</span>
+            </div>
+            <h1>Wetware <span class="bio">Computing</span></h1>
+            <p class="hero-sub">Biological-digital hybrid architectures for adaptive intelligence</p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="stat-value">94.4%</div>
+                    <div class="stat-label">Energy Reduction</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-value">6.4×</div>
+                    <div class="stat-label">Lifetime Extension</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-value">96.1%</div>
+                    <div class="stat-label">ECG Detection F1</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Architecture -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">01</div>
+            <h2>Abeone Wetware Core</h2>
+            <p class="section-desc">Four-layer architecture combining organic substrates with digital processing</p>
+        </div>
+        
+        <div class="arch-layers">
+            <div class="arch-layer">
+                <div class="layer-icon">🧫</div>
+                <div class="layer-content">
+                    <h3>Biological Substrate Layer</h3>
+                    <p>Neuronal arrays, organic sensors, DNA storage with natural nonlinearity and adaptation</p>
+                </div>
+                <div class="layer-stats">
+                    <span class="layer-stat" style="color: var(--accent-bio);">10⁻¹⁸ J/op</span>
+                    <span class="layer-stat" style="color: var(--text-dim);">Energy per operation</span>
+                </div>
+            </div>
+            
+            <div class="arch-layer">
+                <div class="layer-icon">⚡</div>
+                <div class="layer-content">
+                    <h3>Interface Layer</h3>
+                    <p>MEA arrays, optical bridges, chemical transducers for bio-digital communication</p>
+                </div>
+                <div class="layer-stats">
+                    <span class="layer-stat" style="color: var(--accent-neural);">1000× gain</span>
+                    <span class="layer-stat" style="color: var(--text-dim);">Signal amplification</span>
+                </div>
+            </div>
+            
+            <div class="arch-layer">
+                <div class="layer-icon">💻</div>
+                <div class="layer-content">
+                    <h3>Digital Processing Layer</h3>
+                    <p>Signal processing, hybrid compute, and control systems for orchestration</p>
+                </div>
+                <div class="layer-stats">
+                    <span class="layer-stat" style="color: var(--accent-energy);">300-3kHz</span>
+                    <span class="layer-stat" style="color: var(--text-dim);">Bandpass filter</span>
+                </div>
+            </div>
+            
+            <div class="arch-layer">
+                <div class="layer-icon">🌡️</div>
+                <div class="layer-content">
+                    <h3>Thermal Management Layer</h3>
+                    <p>Active cooling, homeostasis control, durability monitoring for substrate health</p>
+                </div>
+                <div class="layer-stats">
+                    <span class="layer-stat" style="color: var(--accent-warn);">37.0°C ± 0.5</span>
+                    <span class="layer-stat" style="color: var(--text-dim);">Target temperature</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- MEA Visualization -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">02</div>
+            <h2>Neural Activity Monitor</h2>
+            <p class="section-desc">Real-time multi-electrode array recording from neuronal cultures</p>
+        </div>
+        
+        <div class="viz-container">
+            <div class="viz-header">
+                <span class="viz-title">64-Channel MEA Recording</span>
+                <div class="viz-legend">
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: var(--accent-bio);"></span>
+                        <span>Spike Event</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: var(--accent-neural);"></span>
+                        <span>Baseline</span>
+                    </div>
+                </div>
+            </div>
+            <canvas id="meaCanvas"></canvas>
+        </div>
+    </section>
+    
+    <!-- Comparison -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">03</div>
+            <h2>Silicon vs Wetware</h2>
+            <p class="section-desc">Comparing traditional and biological computing approaches</p>
+        </div>
+        
+        <div class="comparison-grid">
+            <div class="comp-card silicon">
+                <div class="comp-header">
+                    <div class="comp-icon">🔌</div>
+                    <span class="comp-title">Silicon Computing</span>
+                </div>
+                <div class="comp-metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Energy/op</span>
+                        <span class="metric-value">10⁻¹² J</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Adaptability</span>
+                        <span class="metric-value">None</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Self-repair</span>
+                        <span class="metric-value">None</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Biocompatibility</span>
+                        <span class="metric-value">Poor</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comp-card wetware">
+                <div class="comp-header">
+                    <div class="comp-icon">🧬</div>
+                    <span class="comp-title">Wetware Computing</span>
+                </div>
+                <div class="comp-metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Energy/op</span>
+                        <span class="metric-value">10⁻¹⁸ J (10⁶× better)</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Adaptability</span>
+                        <span class="metric-value">Continuous</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Self-repair</span>
+                        <span class="metric-value">Automatic</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Biocompatibility</span>
+                        <span class="metric-value">Native</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Applications -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-num">04</div>
+            <h2>Applications</h2>
+            <p class="section-desc">Where biological-digital hybrids excel</p>
+        </div>
+        
+        <div class="apps-grid">
+            <div class="app-card">
+                <div class="app-emoji">❤️</div>
+                <h3>Biomedical Signal Processing</h3>
+                <p>ECG analysis, neural interfaces, real-time adaptive thresholds with 23% improvement</p>
+            </div>
+            <div class="app-card">
+                <div class="app-emoji">🌿</div>
+                <h3>Environmental Monitoring</h3>
+                <p>Bacterial biosensors for toxins, parts-per-billion sensitivity, self-replicating networks</p>
+            </div>
+            <div class="app-card">
+                <div class="app-emoji">🤖</div>
+                <h3>Adaptive Robotics</h3>
+                <p>Soft robotics integration, distributed sensing and control, self-healing capability</p>
+            </div>
+            <div class="app-card">
+                <div class="app-emoji">🧠</div>
+                <h3>Brain-Computer Interfaces</h3>
+                <p>Wetware buffer for seamless neural interfaces, long-term biocompatible signal processing</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Explore Wetware Research</h2>
+        <p>Complete theoretical framework, implementation details, and experimental results.</p>
+        <div class="cta-buttons">
+            <a href="../../documentation/whitepapers/wetware-computing.md" class="btn btn-primary">Read Full Whitepaper</a>
+            <a href="../ai-research/index.html" class="btn btn-secondary">All Research</a>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2025 Jimmy De Jesus, Bravetto LLC. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="../ai-research/index.html">AI Research</a> · 
+            <a href="../neuromorphic-evolution/index.html">Neuromorphic Evolution</a> · 
+            <a href="https://github.com/jimmyjdejesus-cmyk">GitHub</a>
+        </p>
+    </footer>
+    
+    <script>
+        // Cell background
+        const cellCanvas = document.getElementById('cellCanvas');
+        const cellCtx = cellCanvas.getContext('2d');
+        
+        function resizeCellCanvas() {
+            cellCanvas.width = window.innerWidth;
+            cellCanvas.height = window.innerHeight;
+        }
+        resizeCellCanvas();
+        window.addEventListener('resize', resizeCellCanvas);
+        
+        // Organic cells
+        const cells = [];
+        for (let i = 0; i < 40; i++) {
+            cells.push({
+                x: Math.random() * cellCanvas.width,
+                y: Math.random() * cellCanvas.height,
+                radius: Math.random() * 30 + 20,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+        
+        function animateCells() {
+            cellCtx.fillStyle = 'rgba(15, 22, 18, 0.05)';
+            cellCtx.fillRect(0, 0, cellCanvas.width, cellCanvas.height);
+            
+            cells.forEach(cell => {
+                cell.x += cell.vx;
+                cell.y += cell.vy;
+                cell.phase += 0.02;
+                
+                if (cell.x < -50) cell.x = cellCanvas.width + 50;
+                if (cell.x > cellCanvas.width + 50) cell.x = -50;
+                if (cell.y < -50) cell.y = cellCanvas.height + 50;
+                if (cell.y > cellCanvas.height + 50) cell.y = -50;
+                
+                const pulseRadius = cell.radius + Math.sin(cell.phase) * 5;
+                
+                // Cell membrane
+                cellCtx.beginPath();
+                cellCtx.arc(cell.x, cell.y, pulseRadius, 0, Math.PI * 2);
+                cellCtx.strokeStyle = 'rgba(74, 222, 128, 0.15)';
+                cellCtx.lineWidth = 2;
+                cellCtx.stroke();
+                
+                // Nucleus
+                cellCtx.beginPath();
+                cellCtx.arc(cell.x, cell.y, pulseRadius * 0.4, 0, Math.PI * 2);
+                cellCtx.fillStyle = 'rgba(74, 222, 128, 0.08)';
+                cellCtx.fill();
+            });
+            
+            requestAnimationFrame(animateCells);
+        }
+        animateCells();
+        
+        // MEA visualization
+        const meaCanvas = document.getElementById('meaCanvas');
+        const meaCtx = meaCanvas.getContext('2d');
+        
+        function resizeMeaCanvas() {
+            const rect = meaCanvas.getBoundingClientRect();
+            meaCanvas.width = rect.width;
+            meaCanvas.height = 300;
+        }
+        resizeMeaCanvas();
+        window.addEventListener('resize', resizeMeaCanvas);
+        
+        const channels = 8;
+        const channelData = [];
+        for (let i = 0; i < channels; i++) {
+            channelData.push({
+                data: new Array(200).fill(0),
+                spikeProb: 0.02 + Math.random() * 0.03
+            });
+        }
+        
+        function updateMea() {
+            // Update data
+            channelData.forEach(ch => {
+                ch.data.shift();
+                let val = (Math.random() - 0.5) * 0.1;
+                
+                // Random spike
+                if (Math.random() < ch.spikeProb) {
+                    val = (Math.random() > 0.5 ? 1 : -1) * (0.5 + Math.random() * 0.5);
+                }
+                
+                ch.data.push(val);
+            });
+            
+            // Draw
+            meaCtx.fillStyle = '#0f1612';
+            meaCtx.fillRect(0, 0, meaCanvas.width, meaCanvas.height);
+            
+            const channelHeight = meaCanvas.height / channels;
+            
+            channelData.forEach((ch, chIdx) => {
+                const baseY = channelHeight * chIdx + channelHeight / 2;
+                
+                // Draw baseline
+                meaCtx.beginPath();
+                meaCtx.moveTo(0, baseY);
+                meaCtx.lineTo(meaCanvas.width, baseY);
+                meaCtx.strokeStyle = 'rgba(96, 165, 250, 0.2)';
+                meaCtx.lineWidth = 1;
+                meaCtx.stroke();
+                
+                // Draw signal
+                meaCtx.beginPath();
+                ch.data.forEach((val, i) => {
+                    const x = (i / ch.data.length) * meaCanvas.width;
+                    const y = baseY - val * channelHeight * 0.4;
+                    
+                    if (i === 0) meaCtx.moveTo(x, y);
+                    else meaCtx.lineTo(x, y);
+                });
+                meaCtx.strokeStyle = 'rgba(74, 222, 128, 0.8)';
+                meaCtx.lineWidth = 1.5;
+                meaCtx.stroke();
+                
+                // Channel label
+                meaCtx.fillStyle = 'rgba(74, 222, 128, 0.5)';
+                meaCtx.font = '10px DM Mono';
+                meaCtx.fillText(`CH${chIdx + 1}`, 5, baseY - channelHeight * 0.35);
+            });
+        }
+        
+        setInterval(updateMea, 50);
+        updateMea();
+    </script>
+</body>
+</html>
+

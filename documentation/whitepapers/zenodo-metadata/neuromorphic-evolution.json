@@ -1,0 +1,24 @@
+{
+  "title": "Neuromorphic Evolution: LLM-Guided Evolutionary Algorithms for Brain-Inspired Computing Architectures",
+  "description": "We present a novel framework combining Large Language Models with evolutionary algorithms to automatically discover and optimize neuromorphic computing architectures. The Kraken Liquid Neural Network achieves 89% improvement over baseline approaches with 6.7x faster convergence through semantic mutation strategies.",
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    {
+      "name": "De Jesus, Jimmy",
+      "affiliation": "Independent Researcher"
+    }
+  ],
+  "keywords": [
+    "neuromorphic computing",
+    "evolutionary algorithms",
+    "liquid neural networks",
+    "LLM-guided optimization",
+    "brain-inspired computing",
+    "architecture search",
+    "STSP plasticity"
+  ]
+}
+
